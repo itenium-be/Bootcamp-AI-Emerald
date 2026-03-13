@@ -3,7 +3,8 @@
     "title": "Itenium SkillForge",
     "backoffice": "BackOffice",
     "teams": "Teams",
-    "learner": "Leerling"
+    "learner": "Leerling",
+    "coach": "Coach"
   },
   "nav": {
     "navigation": "Navigatie",
