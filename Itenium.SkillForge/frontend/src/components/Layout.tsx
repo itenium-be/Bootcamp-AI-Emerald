@@ -50,6 +50,7 @@ import {
   ClipboardList,
   MessageSquare,
   CheckCircle,
+  Target,
 } from 'lucide-react';
 import { useAuthStore, useTeamStore, useThemeStore, type Team } from '@/stores';
 import { fetchUserTeams } from '@/api/client';
@@ -222,12 +223,19 @@ export function Layout() {
   // Determine if user is learner only (no team management access)
   const isLearnerOnly = !isBackOffice && (!teams || teams.length === 0);
 
+  const roleBadgeLabel =
+    isBackOffice && mode === 'backoffice'
+      ? t('app.backoffice')
+      : mode === 'manager'
+        ? t('app.coach')
+        : t('app.learner');
   // Dashboard - always shown
   const dashboardItem = { path: '/', icon: LayoutDashboard, label: t('nav.dashboard') };
 
   // My Learning section - shown for learners and managers
   const myLearningNavItems = [
     { path: '/roadmap', icon: TrendingUp, label: t('nav.roadmap') },
+    { path: '/goals', icon: Target, label: t('nav.goals') },
     { path: '/my-courses', icon: BookOpen, label: t('nav.myCourses') },
     { path: '/my-progress', icon: BarChart3, label: t('nav.myProgress') },
     { path: '/my-certificates', icon: Award, label: t('nav.myCertificates') },
@@ -237,6 +245,7 @@ export function Layout() {
   const catalogNavItems = [
     { path: '/catalog', icon: Library, label: t('nav.catalog') },
     { path: '/skills', icon: Layers, label: t('nav.skills') },
+    { path: '/resources', icon: BookOpen, label: t('nav.resources') },
   ];
 
   // Team section - shown for managers
@@ -449,6 +458,14 @@ export function Layout() {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Role Badge */}
+            <span
+              data-testid="role-badge"
+              className="px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground border"
+            >
+              {roleBadgeLabel}
+            </span>
+
             {/* Language Switcher */}
             <div className="flex items-center gap-1">
               {languages.map((lang) => (

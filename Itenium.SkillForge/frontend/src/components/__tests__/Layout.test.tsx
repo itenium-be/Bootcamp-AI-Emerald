@@ -85,6 +85,7 @@ vi.mock('lucide-react', () => {
     ClipboardList: I,
     MessageSquare: I,
     CheckCircle: I,
+    Target: I,
   };
 });
 
@@ -115,6 +116,7 @@ function setupStores(options: {
       id: 'user-1',
       email: 'test@test.com',
       name: userName,
+      roles: isBackOffice ? ['backoffice'] : [],
       isBackOffice,
     },
   });
@@ -219,7 +221,7 @@ describe('Layout', () => {
     it('shows "app.learner" for learner-only users', () => {
       setupStores({ isBackOffice: false, teams: [] });
       render(<Layout />);
-      expect(screen.getByText('app.learner')).toBeInTheDocument();
+      expect(screen.getAllByText('app.learner').length).toBeGreaterThanOrEqual(1);
     });
 
     it('shows "app.backoffice" in backoffice mode', () => {
@@ -239,6 +241,26 @@ describe('Layout', () => {
       render(<Layout />);
       // Appears in both the switcher button and the team list
       expect(screen.getAllByText('Team Alpha').length).toBeGreaterThanOrEqual(1);
+    });
+  });
+
+  describe('role badge', () => {
+    it('shows BackOffice badge in backoffice mode', () => {
+      setupStores({ isBackOffice: true, mode: 'backoffice' });
+      render(<Layout />);
+      expect(screen.getByTestId('role-badge')).toHaveTextContent('app.backoffice');
+    });
+
+    it('shows Coach badge in manager mode', () => {
+      setupStores({ isBackOffice: false, mode: 'manager', teams: [{ id: 1, name: 'Java' }] });
+      render(<Layout />);
+      expect(screen.getByTestId('role-badge')).toHaveTextContent('app.coach');
+    });
+
+    it('shows Learner badge for learner-only users', () => {
+      setupStores({ isBackOffice: false, mode: 'backoffice', teams: [] });
+      render(<Layout />);
+      expect(screen.getByTestId('role-badge')).toHaveTextContent('app.learner');
     });
   });
 

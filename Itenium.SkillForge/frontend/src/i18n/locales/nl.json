@@ -3,7 +3,8 @@
     "title": "Itenium SkillForge",
     "backoffice": "BackOffice",
     "teams": "Teams",
-    "learner": "Leerling"
+    "learner": "Leerling",
+    "coach": "Coach"
   },
   "nav": {
     "navigation": "Navigatie",
@@ -22,6 +23,8 @@
     "certificates": "Certificaten",
     "myLearning": "Mijn Leertraject",
     "roadmap": "Mijn Roadmap",
+    "goals": "Mijn Doelen",
+    "resources": "Bronnen",
     "myCourses": "Mijn Cursussen",
     "myProgress": "Mijn Voortgang",
     "myCertificates": "Mijn Certificaten",
@@ -124,6 +127,52 @@
     "backToSkills": "Terug naar vaardigheden",
     "notFound": "Vaardigheid niet gevonden",
     "notFoundHint": "Deze vaardigheid bestaat niet of is verwijderd"
+  },
+  "goals": {
+    "title": "Mijn Doelen",
+    "subtitle": "Coaching doelen toegewezen door uw manager",
+    "allGoals": "Alles",
+    "noGoals": "Nog geen doelen",
+    "noGoalsHint": "Uw coach zal doelen toewijzen om uw voortgang bij te houden",
+    "noGoalsInFilter": "Geen doelen komen overeen met dit filter",
+    "level": "Niveau",
+    "resources": "Bronnen",
+    "resourceCompleted": "Voltooid",
+    "raiseFlag": "Ik ben klaar voor validatie",
+    "dismissFlag": "Vlag intrekken",
+    "flagActive": "Wacht op validatie · {{days}} dag(en)",
+    "flagError": "Kon gereedsheidsvlag niet bijwerken",
+    "status": {
+      "active": "Actief",
+      "achieved": "Bereikt",
+      "cancelled": "Geannuleerd"
+    }
+  },
+  "resources": {
+    "title": "Bronnenbibliotheek",
+    "subtitle": "Blader door leermateriaal bijgedragen door het team",
+    "addResource": "Bron Toevoegen",
+    "noResources": "Geen bronnen gevonden",
+    "noResourcesHint": "Wees de eerste om een bron bij te dragen aan de bibliotheek",
+    "allSkills": "Alle vaardigheden",
+    "allTypes": "Alle types",
+    "clearFilters": "Filters wissen",
+    "count": "bronnen",
+    "niveauRange": "Niveau {{from}}–{{to}}",
+    "markComplete": "Markeer als voltooid",
+    "completed": "Voltooid ✓",
+    "completions": "{{count}} voltooiing(en)",
+    "ratePositive": "Duim omhoog",
+    "rateNegative": "Duim omlaag",
+    "title_field": "Titel",
+    "url": "URL",
+    "type": "Type",
+    "skill": "Vaardigheid",
+    "selectSkill": "Kies een vaardigheid...",
+    "fromNiveau": "Vanaf niveau",
+    "toNiveau": "Tot niveau",
+    "requiredFields": "Vul alle verplichte velden in",
+    "createError": "Bron aanmaken mislukt"
   },
   "roadmap": {
     "title": "Mijn Roadmap",

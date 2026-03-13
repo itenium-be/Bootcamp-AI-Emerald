@@ -15,6 +15,7 @@ interface User {
   id: string;
   email: string;
   name: string;
+  roles: string[];
   isBackOffice: boolean;
 }
 
@@ -33,6 +34,7 @@ function parseUserFromToken(token: string): User {
     id: decoded.sub,
     email: decoded.email || decoded.preferred_username || '',
     name: decoded.name || decoded.preferred_username || 'User',
+    roles,
     isBackOffice: roles.includes('backoffice'),
   };
 }

@@ -3,7 +3,8 @@
     "title": "Itenium SkillForge",
     "backoffice": "BackOffice",
     "teams": "Teams",
-    "learner": "Learner"
+    "learner": "Learner",
+    "coach": "Coach"
   },
   "nav": {
     "navigation": "Navigation",
@@ -22,6 +23,8 @@
     "certificates": "Certificates",
     "myLearning": "My Learning",
     "roadmap": "My Roadmap",
+    "goals": "My Goals",
+    "resources": "Resources",
     "myCourses": "My Courses",
     "myProgress": "My Progress",
     "myCertificates": "My Certificates",
@@ -124,6 +127,52 @@
     "backToSkills": "Back to Skills",
     "notFound": "Skill not found",
     "notFoundHint": "This skill does not exist or has been removed"
+  },
+  "goals": {
+    "title": "My Goals",
+    "subtitle": "Coaching goals assigned by your manager",
+    "allGoals": "All",
+    "noGoals": "No goals yet",
+    "noGoalsHint": "Your coach will assign goals to track your progress",
+    "noGoalsInFilter": "No goals match this filter",
+    "level": "Level",
+    "resources": "Resources",
+    "resourceCompleted": "Completed",
+    "raiseFlag": "I'm ready for validation",
+    "dismissFlag": "Withdraw flag",
+    "flagActive": "Waiting for validation · {{days}} day(s)",
+    "flagError": "Could not update readiness flag",
+    "status": {
+      "active": "Active",
+      "achieved": "Achieved",
+      "cancelled": "Cancelled"
+    }
+  },
+  "resources": {
+    "title": "Resource Library",
+    "subtitle": "Browse learning resources contributed by the team",
+    "addResource": "Add Resource",
+    "noResources": "No resources found",
+    "noResourcesHint": "Be the first to contribute a resource to the library",
+    "allSkills": "All skills",
+    "allTypes": "All types",
+    "clearFilters": "Clear filters",
+    "count": "resources",
+    "niveauRange": "Level {{from}}–{{to}}",
+    "markComplete": "Mark complete",
+    "completed": "Completed ✓",
+    "completions": "{{count}} completion(s)",
+    "ratePositive": "Thumbs up",
+    "rateNegative": "Thumbs down",
+    "title_field": "Title",
+    "url": "URL",
+    "type": "Type",
+    "skill": "Skill",
+    "selectSkill": "Select a skill...",
+    "fromNiveau": "From level",
+    "toNiveau": "To level",
+    "requiredFields": "Please fill in all required fields",
+    "createError": "Failed to create resource"
   },
   "roadmap": {
     "title": "My Roadmap",

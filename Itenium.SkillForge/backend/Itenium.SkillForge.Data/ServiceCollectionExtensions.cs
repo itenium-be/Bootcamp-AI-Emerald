@@ -1,5 +1,8 @@
+using Itenium.SkillForge.Services.Coaching;
+using Itenium.SkillForge.Services.Goals;
 using Itenium.SkillForge.Services.Import;
 using Itenium.SkillForge.Services.Profiles;
+using Itenium.SkillForge.Services.Resources;
 using Itenium.SkillForge.Services.Roadmap;
 using Itenium.SkillForge.Services.SkillCatalogue;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +21,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProfileService, ProfileService>();
         services.AddScoped<ISkillCatalogueImporter, SkillCatalogueImporter>();
         services.AddScoped<IRoadmapService, RoadmapService>();
+        services.AddScoped<IGoalService, GoalService>();
+        services.AddScoped<IResourceService, ResourceService>();
+        services.AddScoped<IReadinessFlagService, ReadinessFlagService>();
         return services;
     }
 }
