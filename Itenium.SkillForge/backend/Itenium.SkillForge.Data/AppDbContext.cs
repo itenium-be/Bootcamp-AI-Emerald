@@ -3,10 +3,15 @@ using Itenium.SkillForge.Entities;
 using Itenium.SkillForge.Entities.Coaching;
 using Itenium.SkillForge.Entities.Consultants;
 using Itenium.SkillForge.Entities.Goals;
-using Itenium.SkillForge.Entities.Profiles;
 using Itenium.SkillForge.Entities.Resources;
-using Itenium.SkillForge.Entities.Skills;
 using Microsoft.EntityFrameworkCore;
+using CatalogueSkillEntity = Itenium.SkillForge.Entities.Skills.SkillEntity;
+using CatalogueSkillPrerequisiteEntity = Itenium.SkillForge.Entities.Skills.SkillPrerequisiteEntity;
+using CatalogueSeniorityThresholdEntity = Itenium.SkillForge.Entities.Profiles.SeniorityThresholdEntity;
+using CatalogueSkillCategoryEntity = Itenium.SkillForge.Entities.Skills.SkillCategoryEntity;
+using CatalogueSkillLevelEntity = Itenium.SkillForge.Entities.Skills.SkillLevelEntity;
+using CatalogueCompetenceCentreProfileEntity = Itenium.SkillForge.Entities.Profiles.CompetenceCentreProfileEntity;
+using CatalogueProfileSkillEntity = Itenium.SkillForge.Entities.Profiles.ProfileSkillEntity;
 
 namespace Itenium.SkillForge.Data;
 
@@ -22,19 +27,20 @@ public class AppDbContext : ForgeIdentityDbContext
     public DbSet<CourseEntity> Courses => Set<CourseEntity>();
     public DbSet<UserProfileEntity> UserProfiles => Set<UserProfileEntity>();
 
-    // Skills
-    public DbSet<SkillCategoryEntity> SkillCategories => Set<SkillCategoryEntity>();
-    public DbSet<SkillEntity> Skills => Set<SkillEntity>();
-    public DbSet<SkillLevelEntity> SkillLevels => Set<SkillLevelEntity>();
-    public DbSet<SkillPrerequisiteEntity> SkillPrerequisites => Set<SkillPrerequisiteEntity>();
+    // Skills (new catalogue-based)
+    public DbSet<CatalogueSkillCategoryEntity> SkillCategories => Set<CatalogueSkillCategoryEntity>();
+    public DbSet<CatalogueSkillEntity> Skills => Set<CatalogueSkillEntity>();
+    public DbSet<CatalogueSkillLevelEntity> SkillLevels => Set<CatalogueSkillLevelEntity>();
+    public DbSet<CatalogueSkillPrerequisiteEntity> SkillPrerequisites => Set<CatalogueSkillPrerequisiteEntity>();
 
     // Profiles
-    public DbSet<CompetenceCentreProfileEntity> CompetenceCentreProfiles => Set<CompetenceCentreProfileEntity>();
-    public DbSet<ProfileSkillEntity> ProfileSkills => Set<ProfileSkillEntity>();
-    public DbSet<SeniorityThresholdEntity> SeniorityThresholds => Set<SeniorityThresholdEntity>();
+    public DbSet<CatalogueCompetenceCentreProfileEntity> CompetenceCentreProfiles => Set<CatalogueCompetenceCentreProfileEntity>();
+    public DbSet<CatalogueProfileSkillEntity> ProfileSkills => Set<CatalogueProfileSkillEntity>();
+    public DbSet<CatalogueSeniorityThresholdEntity> SeniorityThresholds => Set<CatalogueSeniorityThresholdEntity>();
 
     // Consultants
     public DbSet<ConsultantEntity> Consultants => Set<ConsultantEntity>();
+    public DbSet<ConsultantSkillEntity> ConsultantSkills => Set<ConsultantSkillEntity>();
 
     // Goals
     public DbSet<GoalEntity> Goals => Set<GoalEntity>();

@@ -22,6 +22,8 @@
     "certificates": "Certificaten",
     "myLearning": "Mijn Leertraject",
     "roadmap": "Mijn Roadmap",
+    "goals": "Mijn Doelen",
+    "resources": "Bronnen",
     "myCourses": "Mijn Cursussen",
     "myProgress": "Mijn Voortgang",
     "myCertificates": "Mijn Certificaten",
@@ -31,6 +33,7 @@
     "teamMembers": "Leden",
     "teamProgress": "Voortgang",
     "assignments": "Toewijzingen",
+    "coachDashboard": "Coach Dashboard",
     "coursesSection": "Cursussen",
     "administration": "Administratie",
     "reports": "Rapporten",
@@ -169,6 +172,65 @@
       "manager": "Manager",
       "backoffice": "Backoffice"
     }
+  },
+  "goals": {
+    "title": "Mijn Doelen",
+    "subtitle": "Volg uw vaardigheidsontwickelingsdoelen",
+    "noGoals": "Geen actieve doelen",
+    "level": "Niveau",
+    "overdue": "Verlopen",
+    "deadline": "Deadline",
+    "resources": "Bronnen",
+    "signalReadiness": "Ik ben klaar",
+    "readinessFlagged": "Wacht op validatie",
+    "flagRaisedAgo": "{{days}} dag(en) geleden gemarkeerd"
+  },
+  "resources": {
+    "title": "Bronnenbibiliotheek",
+    "subtitle": "Bekijk en deel leermateriaal",
+    "noResources": "Geen bronnen gevonden",
+    "niveauRange": "Niveau {{from}}–{{to}}",
+    "markComplete": "Markeer als voltooid",
+    "completed": "Voltooid",
+    "addResource": "Bron Toevoegen"
+  },
+  "coachDashboard": {
+    "title": "Coach Dashboard",
+    "subtitle": "Teamoverzicht",
+    "consultants": "Consultants",
+    "readinessFlags": "Gereedheidsmarkeringen",
+    "overdueGoals": "Verlopen doelen",
+    "activeGoals": "Actieve doelen",
+    "teamOverview": "Teamoverzicht",
+    "noConsultants": "Geen consultants toegewezen",
+    "inactive": "Inactief",
+    "lastActivity": "Laatste activiteit"
+  },
+  "consultantProfile": {
+    "subtitle": "Consultantprofiel",
+    "activeGoals": "Actieve doelen",
+    "readinessFlags": "Openstaande markeringen",
+    "overdueGoals": "Verlopen",
+    "goalsTitle": "Actieve doelen",
+    "sessionsTitle": "Sessiegeschiedenis",
+    "noActiveGoals": "Geen actieve doelen",
+    "noSessions": "Nog geen sessies"
+  },
+  "session": {
+    "title": "Live Sessie",
+    "startSession": "Sessie starten",
+    "resumeSession": "Sessie hervatten",
+    "closeSession": "Sessie sluiten",
+    "closed": "Gesloten",
+    "started": "Sessie gestart",
+    "validated": "Vaardigheid gevalideerd",
+    "notFound": "Sessie niet gevonden",
+    "readyForValidation": "Klaar voor validatie",
+    "activeGoals": "Actieve doelen",
+    "notes": "Sessienotities",
+    "notesPlaceholder": "Notities over deze sessie...",
+    "dismissFlag": "Markering verwijderen",
+    "noActiveGoals": "Geen actieve doelen om te bekijken"
   },
   "errors": {
     "sessionExpired": "Sessie verlopen!",

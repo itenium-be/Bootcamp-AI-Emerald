@@ -225,9 +225,9 @@ public static class SeedData
         var javaProfile = await db.CompetenceCentreProfiles.FirstOrDefaultAsync(p => p.Name == "Java");
 
         // Consultant records
-        var leaConsultant = new ConsultantEntity { UserId = lea.Id, ProfileId = dotnetProfile?.Id };
-        var sanderConsultant = new ConsultantEntity { UserId = sander.Id, ProfileId = javaProfile?.Id };
-        var thomasConsultant = new ConsultantEntity { UserId = thomas.Id, ProfileId = dotnetProfile?.Id };
+        var leaConsultant = new ConsultantEntity { UserId = lea.Id, ProfileId = dotnetProfile?.Id, TeamId = 2 };
+        var sanderConsultant = new ConsultantEntity { UserId = sander.Id, ProfileId = javaProfile?.Id, TeamId = 1 };
+        var thomasConsultant = new ConsultantEntity { UserId = thomas.Id, ProfileId = dotnetProfile?.Id, TeamId = 2 };
         db.Consultants.AddRange(leaConsultant, sanderConsultant, thomasConsultant);
         await db.SaveChangesAsync();
 

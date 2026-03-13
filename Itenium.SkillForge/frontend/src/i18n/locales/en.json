@@ -22,6 +22,8 @@
     "certificates": "Certificates",
     "myLearning": "My Learning",
     "roadmap": "My Roadmap",
+    "goals": "My Goals",
+    "resources": "Resources",
     "myCourses": "My Courses",
     "myProgress": "My Progress",
     "myCertificates": "My Certificates",
@@ -31,6 +33,7 @@
     "teamMembers": "Members",
     "teamProgress": "Progress",
     "assignments": "Assignments",
+    "coachDashboard": "Coach Dashboard",
     "coursesSection": "Courses",
     "administration": "Administration",
     "reports": "Reports",
@@ -169,6 +172,65 @@
       "manager": "Manager",
       "backoffice": "Backoffice"
     }
+  },
+  "goals": {
+    "title": "My Goals",
+    "subtitle": "Track your skill development goals",
+    "noGoals": "No active goals",
+    "level": "Level",
+    "overdue": "Overdue",
+    "deadline": "Deadline",
+    "resources": "Resources",
+    "signalReadiness": "I'm Ready",
+    "readinessFlagged": "Awaiting validation",
+    "flagRaisedAgo": "Flagged {{days}} day(s) ago"
+  },
+  "resources": {
+    "title": "Resource Library",
+    "subtitle": "Browse and contribute learning resources",
+    "noResources": "No resources found",
+    "niveauRange": "Level {{from}}–{{to}}",
+    "markComplete": "Mark complete",
+    "completed": "Completed",
+    "addResource": "Add Resource"
+  },
+  "coachDashboard": {
+    "title": "Coach Dashboard",
+    "subtitle": "Team overview",
+    "consultants": "Consultants",
+    "readinessFlags": "Readiness Flags",
+    "overdueGoals": "Overdue Goals",
+    "activeGoals": "Active Goals",
+    "teamOverview": "Team Overview",
+    "noConsultants": "No consultants assigned",
+    "inactive": "Inactive",
+    "lastActivity": "Last activity"
+  },
+  "consultantProfile": {
+    "subtitle": "Consultant profile",
+    "activeGoals": "Active Goals",
+    "readinessFlags": "Pending Flags",
+    "overdueGoals": "Overdue",
+    "goalsTitle": "Active Goals",
+    "sessionsTitle": "Session History",
+    "noActiveGoals": "No active goals",
+    "noSessions": "No sessions yet"
+  },
+  "session": {
+    "title": "Live Session",
+    "startSession": "Start Session",
+    "resumeSession": "Resume Session",
+    "closeSession": "Close Session",
+    "closed": "Closed",
+    "started": "Session started",
+    "validated": "Skill validated",
+    "notFound": "Session not found",
+    "readyForValidation": "Ready for Validation",
+    "activeGoals": "Active Goals",
+    "notes": "Session Notes",
+    "notesPlaceholder": "Notes about this session...",
+    "dismissFlag": "Dismiss flag",
+    "noActiveGoals": "No active goals to review"
   },
   "errors": {
     "sessionExpired": "Session expired!",

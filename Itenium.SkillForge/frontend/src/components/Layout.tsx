@@ -47,9 +47,9 @@ import {
   Layers,
   TrendingUp,
   BarChart3,
-  ClipboardList,
   MessageSquare,
   CheckCircle,
+  Target,
 } from 'lucide-react';
 import { useAuthStore, useTeamStore, useThemeStore, type Team } from '@/stores';
 import { fetchUserTeams } from '@/api/client';
@@ -228,6 +228,8 @@ export function Layout() {
   // My Learning section - shown for learners and managers
   const myLearningNavItems = [
     { path: '/roadmap', icon: TrendingUp, label: t('nav.roadmap') },
+    { path: '/goals', icon: Target, label: t('nav.goals') },
+    { path: '/resources', icon: Library, label: t('nav.resources') },
     { path: '/my-courses', icon: BookOpen, label: t('nav.myCourses') },
     { path: '/my-progress', icon: BarChart3, label: t('nav.myProgress') },
     { path: '/my-certificates', icon: Award, label: t('nav.myCertificates') },
@@ -241,9 +243,8 @@ export function Layout() {
 
   // Team section - shown for managers
   const teamNavItems = [
-    { path: '/team/members', icon: Users, label: t('nav.teamMembers') },
-    { path: '/team/progress', icon: BarChart3, label: t('nav.teamProgress') },
-    { path: '/team/assignments', icon: ClipboardList, label: t('nav.assignments') },
+    { path: '/coach/dashboard', icon: Users, label: t('nav.coachDashboard') },
+    { path: '/resources', icon: Library, label: t('nav.resources') },
   ];
 
   // Courses management - shown for managers

@@ -85,6 +85,7 @@ vi.mock('lucide-react', () => {
     ClipboardList: I,
     MessageSquare: I,
     CheckCircle: I,
+    Target: I,
   };
 });
 
@@ -198,9 +199,8 @@ describe('Layout', () => {
       render(<Layout />);
 
       expect(screen.getByText('nav.team')).toBeInTheDocument();
-      expect(screen.getByText('nav.teamMembers')).toBeInTheDocument();
-      expect(screen.getByText('nav.teamProgress')).toBeInTheDocument();
-      expect(screen.getByText('nav.assignments')).toBeInTheDocument();
+      expect(screen.getByText('nav.coachDashboard')).toBeInTheDocument();
+      expect(screen.getByText('nav.resources')).toBeInTheDocument();
 
       expect(screen.getByText('nav.coursesSection')).toBeInTheDocument();
       expect(screen.getByText('nav.courses')).toBeInTheDocument();

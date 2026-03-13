@@ -210,3 +210,176 @@ export async function archiveUser(id: string): Promise<void> {
 export async function restoreUser(id: string): Promise<void> {
   await api.post(`/api/user/${id}/restore`);
 }
+
+// Goals
+export interface GoalResource {
+  goalId: number;
+  resourceId: number;
+  resource: { id: number; title: string; url: string; type: string; fromNiveau: number; toNiveau: number };
+}
+
+export interface ReadinessFlag {
+  id: number;
+  goalId: number;
+  raisedAt: string;
+  dismissedAt: string | null;
+}
+
+export interface GoalResponse {
+  id: number;
+  consultantUserId: string;
+  coachUserId: string;
+  skillId: number;
+  skill: { id: number; name: string; levelCount: number };
+  currentNiveau: number;
+  targetNiveau: number;
+  deadline: string | null;
+  status: 'Active' | 'Achieved' | 'Cancelled';
+  createdAt: string;
+  goalResources: GoalResource[];
+  readinessFlag: ReadinessFlag | null;
+}
+
+export async function fetchMyGoals(): Promise<GoalResponse[]> {
+  const response = await api.get<GoalResponse[]>('/api/goal/mine');
+  return response.data;
+}
+
+export async function fetchConsultantGoals(consultantUserId: string): Promise<GoalResponse[]> {
+  const response = await api.get<GoalResponse[]>(`/api/goal/consultant/${consultantUserId}`);
+  return response.data;
+}
+
+export interface CreateGoalRequest {
+  consultantUserId: string;
+  skillId: number;
+  currentNiveau: number;
+  targetNiveau: number;
+  deadline: string | null;
+}
+
+export async function createGoal(request: CreateGoalRequest): Promise<GoalResponse> {
+  const response = await api.post<GoalResponse>('/api/goal', request);
+  return response.data;
+}
+
+export async function signalReadiness(goalId: number): Promise<void> {
+  await api.post(`/api/goal/${goalId}/readiness`);
+}
+
+export async function dismissReadiness(goalId: number): Promise<void> {
+  await api.delete(`/api/goal/${goalId}/readiness`);
+}
+
+// Resources
+export interface ResourceResponse {
+  id: number;
+  title: string;
+  url: string;
+  type: string;
+  skillId: number;
+  fromNiveau: number;
+  toNiveau: number;
+  addedByUserId: string;
+  addedAt: string;
+  completions: { userId: string; completedAt: string }[];
+  ratings: { userId: string; isPositive: boolean }[];
+}
+
+export async function fetchResources(skillId?: number): Promise<ResourceResponse[]> {
+  const response = await api.get<ResourceResponse[]>('/api/resource', { params: skillId ? { skillId } : undefined });
+  return response.data;
+}
+
+export interface CreateResourceRequest {
+  title: string;
+  url: string;
+  type: string;
+  skillId: number;
+  fromNiveau: number;
+  toNiveau: number;
+}
+
+export async function createResource(request: CreateResourceRequest): Promise<ResourceResponse> {
+  const response = await api.post<ResourceResponse>('/api/resource', request);
+  return response.data;
+}
+
+export async function markResourceComplete(resourceId: number): Promise<void> {
+  await api.post(`/api/resource/${resourceId}/complete`);
+}
+
+export async function unmarkResourceComplete(resourceId: number): Promise<void> {
+  await api.delete(`/api/resource/${resourceId}/complete`);
+}
+
+export async function rateResource(resourceId: number, isPositive: boolean): Promise<void> {
+  await api.post(`/api/resource/${resourceId}/rate`, { isPositive });
+}
+
+// Coach Dashboard
+export interface ConsultantDashboardRow {
+  userId: string;
+  fullName: string;
+  activeGoalCount: number;
+  readinessFlagCount: number;
+  maxFlagAgeInDays: number | null;
+  overdueGoalCount: number;
+  lastActivityAt: string | null;
+  isInactive: boolean;
+}
+
+export async function fetchCoachDashboard(): Promise<ConsultantDashboardRow[]> {
+  const response = await api.get<ConsultantDashboardRow[]>('/api/coach/dashboard');
+  return response.data;
+}
+
+// Coaching Sessions
+export interface CoachingSession {
+  id: number;
+  consultantUserId: string;
+  coachUserId: string;
+  startedAt: string;
+  closedAt: string | null;
+  notes: string | null;
+}
+
+export async function startSession(consultantUserId: string): Promise<CoachingSession> {
+  const response = await api.post<CoachingSession>('/api/coaching-sessions', { consultantUserId });
+  return response.data;
+}
+
+export async function closeSession(id: number, notes: string | null): Promise<void> {
+  await api.post(`/api/coaching-sessions/${id}/close`, { notes });
+}
+
+export async function fetchSessions(consultantUserId?: string): Promise<CoachingSession[]> {
+  const response = await api.get<CoachingSession[]>('/api/coaching-sessions', {
+    params: consultantUserId ? { consultantUserId } : undefined,
+  });
+  return response.data;
+}
+
+// Skill Validations
+export interface SkillValidation {
+  id: number;
+  consultantUserId: string;
+  coachUserId: string;
+  skillId: number;
+  skill: { id: number; name: string };
+  niveau: number;
+  validatedAt: string;
+  sessionId: number | null;
+}
+
+export async function validateSkill(request: { consultantUserId: string; skillId: number; niveau: number; sessionId?: number }): Promise<SkillValidation> {
+  const response = await api.post<SkillValidation>('/api/skill-validations', request);
+  return response.data;
+}
+
+export async function fetchValidations(consultantUserId?: string): Promise<SkillValidation[]> {
+  const response = await api.get<SkillValidation[]>('/api/skill-validations', {
+    params: consultantUserId ? { consultantUserId } : undefined,
+  });
+  return response.data;
+}
