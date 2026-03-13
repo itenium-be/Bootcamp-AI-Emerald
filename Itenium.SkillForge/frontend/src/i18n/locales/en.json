@@ -242,6 +242,53 @@
     "noProfile": "No profile",
     "noMembers": "No team members found"
   },
+  "coach": {
+    "dashboard": "Team Dashboard",
+    "dashboardSubtitle": "Your team's readiness and activity at a glance",
+    "name": "Name",
+    "activeGoals": "Active Goals",
+    "readinessFlags": "Readiness Flags",
+    "lastActivity": "Last Activity",
+    "inactive": "Inactive",
+    "inactiveDays": "{{days}} days",
+    "noConsultants": "No consultants found",
+    "inactiveHighlight": "Inactive >21 days",
+    "flagAge": "{{days}}d"
+  },
+  "consultant": {
+    "profile": "Consultant Profile",
+    "skills": "Skills",
+    "activeGoals": "Active Goals",
+    "recentActivity": "Recent Activity",
+    "noSkills": "No skills recorded",
+    "noGoals": "No active goals",
+    "noActivity": "No recent activity",
+    "startSession": "Start Session",
+    "dueDate": "Due {{date}}"
+  },
+  "session": {
+    "title": "Live Session",
+    "subtitle": "Session with {{name}}",
+    "pendingValidations": "Pending Validations",
+    "activeGoals": "Active Goals",
+    "validateSkill": "Validate Skill",
+    "currentLevel": "Current: Level {{niveau}}",
+    "newLevel": "New Level",
+    "note": "Note (optional)",
+    "notePlaceholder": "Add a note about this validation...",
+    "validate": "Validate",
+    "addGoal": "Add SMART Goal",
+    "goalTitle": "Goal Title",
+    "goalDescription": "Description",
+    "goalDueDate": "Due Date",
+    "goalSkill": "Related Skill (optional)",
+    "createGoal": "Create Goal",
+    "endSession": "End Session",
+    "sessionNotes": "Session Notes",
+    "sessionNotesPlaceholder": "Summarise what was discussed...",
+    "noSkills": "No skills to validate",
+    "cancel": "Cancel"
+  },
   "errors": {
     "sessionExpired": "Session expired!",
     "internalServerError": "Internal Server Error!"
