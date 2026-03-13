@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISkillCatalogueImporter, SkillCatalogueImporter>();
         services.AddScoped<IRoadmapService, RoadmapService>();
         services.AddScoped<ISkillValidationService, SkillValidationService>();
+        services.AddScoped<ICoachingSessionService, CoachingSessionService>();
         return services;
     }
 }
