@@ -43,7 +43,6 @@ import {
   GraduationCap,
   Award,
   Settings,
-  Library,
   Layers,
   TrendingUp,
   BarChart3,
