@@ -262,6 +262,7 @@ export function Layout() {
   const adminNavItems = [
     { path: '/admin/users', icon: Users, label: t('nav.users') },
     { path: '/admin/teams', icon: Component, label: t('nav.teams') },
+    { path: '/team/members', icon: Users, label: t('nav.teamMembers') },
   ];
 
   // Reports - shown for backoffice
