@@ -26,6 +26,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IReadinessFlagService, ReadinessFlagService>();
         services.AddScoped<ISkillValidationService, SkillValidationService>();
         services.AddScoped<ICoachingSessionService, CoachingSessionService>();
+        services.AddScoped<ICoachDashboardService, CoachDashboardService>();
         return services;
     }
 }
