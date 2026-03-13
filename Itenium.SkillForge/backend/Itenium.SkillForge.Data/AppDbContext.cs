@@ -20,6 +20,7 @@ public class AppDbContext : ForgeIdentityDbContext
     // Existing entities
     public DbSet<TeamEntity> Teams => Set<TeamEntity>();
     public DbSet<CourseEntity> Courses => Set<CourseEntity>();
+    public DbSet<UserProfileEntity> UserProfiles => Set<UserProfileEntity>();
 
     // Skills
     public DbSet<SkillCategoryEntity> SkillCategories => Set<SkillCategoryEntity>();

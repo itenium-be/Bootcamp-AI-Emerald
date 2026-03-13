@@ -586,6 +586,19 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.ToTable("Teams");
                 });
 
+            modelBuilder.Entity("Itenium.SkillForge.Entities.UserProfileEntity", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserProfiles");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1109,6 +1122,15 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.Navigation("RequiredSkill");
 
                     b.Navigation("Skill");
+                });
+
+            modelBuilder.Entity("Itenium.SkillForge.Entities.UserProfileEntity", b =>
+                {
+                    b.HasOne("Itenium.Forge.Security.OpenIddict.ForgeUser", null)
+                        .WithOne()
+                        .HasForeignKey("Itenium.SkillForge.Entities.UserProfileEntity", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
