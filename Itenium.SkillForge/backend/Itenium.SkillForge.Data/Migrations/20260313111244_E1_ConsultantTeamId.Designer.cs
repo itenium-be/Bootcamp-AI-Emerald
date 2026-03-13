@@ -3,6 +3,7 @@ using System;
 using Itenium.SkillForge.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Itenium.SkillForge.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260313111244_E1_ConsultantTeamId")]
+    partial class E1_ConsultantTeamId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -589,19 +592,6 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.ToTable("Teams");
                 });
 
-            modelBuilder.Entity("Itenium.SkillForge.Entities.UserProfileEntity", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
-
-                    b.HasKey("UserId");
-
-                    b.ToTable("UserProfiles");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -1125,15 +1115,6 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.Navigation("RequiredSkill");
 
                     b.Navigation("Skill");
-                });
-
-            modelBuilder.Entity("Itenium.SkillForge.Entities.UserProfileEntity", b =>
-                {
-                    b.HasOne("Itenium.Forge.Security.OpenIddict.ForgeUser", null)
-                        .WithOne()
-                        .HasForeignKey("Itenium.SkillForge.Entities.UserProfileEntity", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

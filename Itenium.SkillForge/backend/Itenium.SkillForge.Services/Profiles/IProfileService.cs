@@ -1,4 +1,5 @@
 using Itenium.SkillForge.Services.SkillCatalogue;
+using Itenium.SkillForge.Services;
 
 namespace Itenium.SkillForge.Services.Profiles;
 
@@ -25,7 +26,7 @@ public interface IProfileService
 
     /// <summary>
     /// Assigns (or clears) the profile for a consultant.
-    /// Returns <see langword="false"/> when the consultant does not exist.
+    /// Returns <see langword="false"/> when the consultant does not exist or is outside the caller's team scope.
     /// </summary>
-    Task<bool> AssignProfileToConsultantAsync(int consultantId, int? profileId, CancellationToken ct = default);
+    Task<bool> AssignProfileToConsultantAsync(int consultantId, int? profileId, ITeamQueryScope scope, CancellationToken ct = default);
 }
