@@ -89,13 +89,26 @@
   },
   "settings": {
     "title": "Settings",
+    "subtitle": "Manage your account preferences",
+    "profile": "Profile",
+    "name": "Name",
+    "email": "Email",
+    "roles": "Roles",
+    "noRoles": "No roles assigned",
     "appearance": "Appearance",
+    "themeDescription": "Choose how SkillForge looks on your device",
     "language": "Language",
+    "languageDescription": "Select your preferred interface language",
     "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
     "system": "System",
-    "save": "Save"
+    "save": "Save",
+    "memeTitle": "Developer Certification",
+    "memeSubtitle": "Works on My Machine™",
+    "memeBody": "This certifies that the above-named developer has successfully reproduced the bug on their local environment, confirmed it does not occur in production (somehow), and has achieved the sacred status of:",
+    "memeStamp": "CERTIFIED LOCAL DEV ✓",
+    "memeDisclaimer": "Valid in all dev environments. Void where deployed."
   },
   "common": {
     "loading": "Loading...",

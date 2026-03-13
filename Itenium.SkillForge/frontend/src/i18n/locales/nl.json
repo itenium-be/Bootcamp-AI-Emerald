@@ -89,13 +89,26 @@
   },
   "settings": {
     "title": "Instellingen",
+    "subtitle": "Beheer uw accountvoorkeuren",
+    "profile": "Profiel",
+    "name": "Naam",
+    "email": "E-mail",
+    "roles": "Rollen",
+    "noRoles": "Geen rollen toegewezen",
     "appearance": "Uiterlijk",
+    "themeDescription": "Kies hoe SkillForge eruitziet op uw apparaat",
     "language": "Taal",
+    "languageDescription": "Selecteer uw voorkeurstaal voor de interface",
     "theme": "Thema",
     "light": "Licht",
     "dark": "Donker",
     "system": "Systeem",
-    "save": "Opslaan"
+    "save": "Opslaan",
+    "memeTitle": "Ontwikkelaarscertificaat",
+    "memeSubtitle": "Werkt op Mijn Machine™",
+    "memeBody": "Dit bevestigt dat de bovengenoemde ontwikkelaar de bug succesvol heeft gereproduceerd in zijn lokale omgeving, bevestigd heeft dat het niet voorkomt in productie (op de een of andere manier), en de heilige status heeft bereikt van:",
+    "memeStamp": "GECERTIFICEERD LOKALE DEV ✓",
+    "memeDisclaimer": "Geldig in alle dev-omgevingen. Ongeldig waar gedeployed."
   },
   "common": {
     "loading": "Laden...",
