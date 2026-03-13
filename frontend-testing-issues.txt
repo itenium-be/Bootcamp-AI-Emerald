@@ -1,0 +1,508 @@
+================================================================================
+  SKILLFORGE - FRONTEND TESTING ISSUES
+  Generated: 2026-03-13
+  Based on: GitHub Issues AC (itenium-be/Bootcamp-AI-Emerald)
+  Test framework: Cypress (cypress-e2e/) + Playwright (frontend/e2e/)
+================================================================================
+
+Test users available:
+  backoffice  / AdminPassword123!   (role: backoffice)
+  java        / UserPassword123!    (role: manager, team: Java)
+  dotnet      / UserPassword123!    (role: manager, team: .NET)
+  multi       / UserPassword123!    (role: manager, multiple teams)
+  learner     / UserPassword123!    (role: learner/consultant)
+
+================================================================================
+ISSUE #4 — Frontend: Auth-aware routing and role-based layout
+AC: Learner cannot navigate to coach/admin routes
+    Correct landing page per role after sign-in
+================================================================================
+
+TEST-4.1  [role-routing] Learner lands on roadmap page after sign-in
+  Given: I sign in as 'learner'
+  When:  The redirect after login completes
+  Then:  I am on the roadmap page (not the dashboard or admin page)
+
+TEST-4.2  [role-routing] Manager lands on coach dashboard after sign-in
+  Given: I sign in as 'java' (manager role)
+  When:  The redirect after login completes
+  Then:  I am on the coach dashboard page
+
+TEST-4.3  [role-routing] Backoffice lands on admin/user management after sign-in
+  Given: I sign in as 'backoffice'
+  When:  The redirect after login completes
+  Then:  I am on the admin user management page
+
+TEST-4.4  [auth-guard] Learner cannot navigate to admin route
+  Given: I am logged in as 'learner'
+  When:  I navigate directly to /admin/users
+  Then:  I am redirected (403 page or back to my landing page)
+  And:   I do not see any admin content
+
+TEST-4.5  [auth-guard] Learner cannot navigate to coach dashboard
+  Given: I am logged in as 'learner'
+  When:  I navigate directly to /dashboard or coach route
+  Then:  I am redirected or shown an access denied message
+
+TEST-4.6  [auth-guard] Manager cannot navigate to admin/backoffice route
+  Given: I am logged in as 'java' (manager)
+  When:  I navigate directly to /admin/users
+  Then:  I am redirected or shown an access denied message
+
+TEST-4.7  [nav] Role badge is visible in layout header
+  Given: I am logged in as 'learner'
+  When:  I view the layout header
+  Then:  I see a role badge indicating my role (e.g. "Learner" or "Consultant")
+
+TEST-4.8  [nav] Learner sidebar shows roadmap/resources nav items only
+  Given: I am logged in as 'learner'
+  Then:  The sidebar contains: Roadmap, Resources (or similar learner items)
+  And:   The sidebar does NOT contain: team management, admin, coach dashboard
+
+TEST-4.9  [nav] Manager sidebar shows dashboard and team nav items
+  Given: I am logged in as 'java'
+  Then:  The sidebar contains: Dashboard, Team items
+  And:   The sidebar does NOT contain: admin/backoffice items
+
+================================================================================
+ISSUE #5 — Frontend: Admin page — user management UI
+AC: Admin can create a user and assign role + team in < 2 minutes (Journey 4)
+    Archived users hidden from default view
+================================================================================
+
+TEST-5.1  [user-list] Backoffice can see the user management page
+  Given: I am logged in as 'backoffice'
+  When:  I navigate to the user management page
+  Then:  I see a table/list of users
+
+TEST-5.2  [user-list] User list supports search by name or email
+  Given: I am on the user management page
+  When:  I type a name into the search field
+  Then:  The list filters to show only matching users
+
+TEST-5.3  [user-list] User list can be filtered by role
+  Given: I am on the user management page
+  When:  I select a role filter (e.g. "manager")
+  Then:  Only users with that role are shown
+
+TEST-5.4  [user-list] Archived users are NOT shown in the default view
+  Given: I am on the user management page (default view)
+  Then:  Archived users are not visible in the list
+
+TEST-5.5  [user-list] Archived users CAN be shown via archived filter toggle
+  Given: I am on the user management page
+  When:  I enable the "show archived" filter
+  Then:  Archived users appear in the list with a visual indicator
+
+TEST-5.6  [user-create] Admin can open a create user form
+  Given: I am on the user management page
+  When:  I click "Create user" (or equivalent)
+  Then:  A form opens with fields: name, email, role, team(s)
+
+TEST-5.7  [user-create] Admin can create a user with role and team assignment
+  Given: I have filled in name, email, role="learner", team="Java"
+  When:  I submit the form
+  Then:  The new user appears in the user list
+  And:   The user has the correct role and team shown
+
+TEST-5.8  [user-archive] Admin can archive a user
+  Given: I am on the user management page
+  When:  I click the archive action for a specific user
+  Then:  The user disappears from the default view
+  And:   A success confirmation is shown
+
+TEST-5.9  [user-restore] Admin can restore an archived user
+  Given: I have the archived filter enabled and see an archived user
+  When:  I click the restore action for that user
+  Then:  The user is restored and visible in the default view
+
+TEST-5.10 [unassigned-view] Admin can see consultants without an active coach
+  Given: I am on the user management page
+  When:  I navigate to "Unassigned consultants" view
+  Then:  I see a list of consultants not assigned to any team/coach
+
+================================================================================
+ISSUE #12 — Frontend: Skill catalogue browse and detail pages
+AC: All authenticated roles can access
+    Skill detail shows all level descriptors clearly
+    Prerequisite skills are clickable
+================================================================================
+
+TEST-12.1 [catalogue] Learner can access the skill catalogue page
+  Given: I am logged in as 'learner'
+  When:  I navigate to the skill catalogue
+  Then:  I see a list of skills
+
+TEST-12.2 [catalogue] Manager can access the skill catalogue page
+  Given: I am logged in as 'java'
+  When:  I navigate to the skill catalogue
+  Then:  I see a list of skills
+
+TEST-12.3 [catalogue] Backoffice can access the skill catalogue page
+  Given: I am logged in as 'backoffice'
+  When:  I navigate to the skill catalogue
+  Then:  I see a list of skills
+
+TEST-12.4 [catalogue] Skills are listed grouped by category
+  Given: I am on the skill catalogue page
+  Then:  Skills are visually grouped by their category
+
+TEST-12.5 [catalogue] Skills can be filtered by profile
+  Given: I am on the skill catalogue page
+  When:  I select a profile filter (e.g. ".NET" or "Java")
+  Then:  Only skills belonging to that profile are shown
+
+TEST-12.6 [skill-detail] Clicking a skill opens the detail page
+  Given: I am on the skill catalogue page
+  When:  I click on a skill
+  Then:  I am on the skill detail page showing the skill name and description
+
+TEST-12.7 [skill-detail] Skill detail shows all level descriptors
+  Given: I am on a skill detail page for a skill with multiple levels
+  Then:  I see a descriptor for each level (niveau 1 through N)
+  And:   Each descriptor is clearly labeled with its niveau number
+
+TEST-12.8 [skill-detail] Skill detail shows prerequisite skills as clickable links
+  Given: I am on a skill detail page that has prerequisites
+  Then:  I see the prerequisite skills listed
+  And:   Each prerequisite skill is a clickable link
+  When:  I click a prerequisite skill link
+  Then:  I am navigated to that prerequisite's detail page
+
+TEST-12.9 [skill-detail] Skills with levelCount=1 are shown as checkbox skills
+  Given: I am viewing a skill with levelCount=1
+  Then:  It is presented as a simple checkbox/boolean skill (not a progression)
+
+================================================================================
+ISSUE #16 — Frontend: Consultant roadmap page with progressive disclosure
+AC: First login shows pre-set goals (not empty)
+    'Show all' reveals full profile skills
+    Warning shown for unmet prerequisites (informational, not a lock)
+    FR12, FR13, FR14, FR15 covered
+================================================================================
+
+TEST-16.1 [roadmap] Learner's roadmap is not empty on first login
+  Given: I sign in as 'learner' (Sander in seed data — has 3 pre-set goals)
+  When:  I land on the roadmap page
+  Then:  I see skill nodes already present (not an empty state)
+  And:   My pre-set goals are visible on the roadmap
+
+TEST-16.2 [roadmap] Default roadmap shows 8-12 skill nodes
+  Given: I am on the roadmap page
+  Then:  Between 8 and 12 skill nodes are displayed
+
+TEST-16.3 [roadmap] 'Show all' button expands to full profile skill list
+  Given: I am on the roadmap page in default (progressive) view
+  When:  I click "Show all" (or equivalent)
+  Then:  More skill nodes are revealed (all skills in my profile)
+  And:   The count of visible nodes is greater than before
+
+TEST-16.4 [roadmap] Skill node shows current niveau and target niveau
+  Given: I am on the roadmap page and I have an active goal for a skill
+  Then:  The skill node for that skill displays both currentNiveau and targetNiveau
+
+TEST-16.5 [roadmap] Validated skill node is shown in green/completed state
+  Given: I have a skill that has been validated
+  When:  I view my roadmap
+  Then:  That skill's node has a distinct visual completed state (e.g. green)
+
+TEST-16.6 [roadmap] Prerequisite warning is informational (not a lock icon)
+  Given: I have a skill node with an unmet prerequisite
+  Then:  The node shows an informational warning indicator
+  And:   The warning is NOT a lock icon
+  And:   I can still click the node to view skill details
+
+================================================================================
+ISSUE #17 — Frontend: Seniority progress indicator on roadmap
+AC: Shows met/required count correctly
+    Updates after skill validation
+    FR39 covered
+================================================================================
+
+TEST-17.1 [seniority] Seniority progress indicator is visible on roadmap page
+  Given: I am logged in as 'learner'
+  When:  I am on the roadmap page
+  Then:  I see a seniority progress display (e.g. "You meet 14/18 Medior requirements")
+
+TEST-17.2 [seniority] Progress shows correct met/required numbers
+  Given: The seed data has Lea meeting 14/18 Medior requirements
+  When:  Lea views the roadmap
+  Then:  The indicator shows "14/18" (or equivalent)
+
+TEST-17.3 [seniority] Seniority indicator updates after a skill is validated (session)
+  Given: A coach validates a new skill for the learner during a session
+  When:  The learner views the roadmap afterwards
+  Then:  The seniority count has increased
+
+================================================================================
+ISSUE #21 — Frontend: Active goals view on roadmap
+AC: Lea's first login shows 3 goals pre-populated and visible
+    Progress updates immediately on resource completion
+    FR17 covered
+================================================================================
+
+TEST-21.1 [goals] Learner sees active goals on roadmap page
+  Given: I sign in as 'learner' (Lea's account — has 3 active goals)
+  When:  I view the roadmap page
+  Then:  I see 3 active goal cards
+
+TEST-21.2 [goals] Goal card shows skill name, niveau range, and deadline
+  Given: I am viewing an active goal card
+  Then:  The card shows: skill name, currentNiveau → targetNiveau, and deadline
+
+TEST-21.3 [goals] Goal card shows linked resources
+  Given: I am viewing an active goal that has linked resources
+  Then:  The goal card shows the list of linked resources
+
+TEST-21.4 [goals] Overdue goal has a visual indicator
+  Given: I have a goal whose deadline has passed and it is still active
+  Then:  The goal card shows a visual overdue indicator (e.g. red/amber highlight)
+
+TEST-21.5 [goals] Resource completion toggle updates goal progress immediately
+  Given: I am viewing a goal card with incomplete resources
+  When:  I toggle a resource as completed
+  Then:  The goal's progress indicator updates immediately (no page refresh needed)
+
+================================================================================
+ISSUE #22 — Frontend: Resource library page
+AC: All authenticated users can browse and add
+    Completed resources show a checkmark / evidence badge
+    Rating shows aggregate up/down count
+================================================================================
+
+TEST-22.1 [resources] Learner can access the resource library page
+  Given: I am logged in as 'learner'
+  When:  I navigate to the resource library
+  Then:  I see a list of resources
+
+TEST-22.2 [resources] Resources can be filtered by skill
+  Given: I am on the resource library page
+  When:  I select a skill filter
+  Then:  Only resources for that skill are shown
+
+TEST-22.3 [resources] Resources can be filtered by type
+  Given: I am on the resource library page
+  When:  I select a type filter (e.g. "video", "article")
+  Then:  Only resources of that type are shown
+
+TEST-22.4 [resources] Any authenticated user can add a resource
+  Given: I am logged in as 'learner'
+  When:  I fill in the add resource form (title, URL, type, skill, niveau range)
+  And:   I submit
+  Then:  The new resource appears in the library
+
+TEST-22.5 [resources] Resource card shows thumbs up/down rating with aggregate count
+  Given: I am viewing a resource card that has ratings
+  Then:  I see thumbs up and thumbs down indicators with counts
+
+TEST-22.6 [resources] User can rate a resource thumbs up or down
+  Given: I am viewing a resource card
+  When:  I click the thumbs up button
+  Then:  My rating is registered and the count updates
+
+TEST-22.7 [resources] Completed resource shows checkmark badge
+  Given: I have marked a resource as complete
+  When:  I view that resource card
+  Then:  It shows a checkmark or "completed" badge
+
+TEST-22.8 [resources] User can mark a resource as complete
+  Given: I am viewing a resource I have not yet completed
+  When:  I click "Mark as complete" and confirm
+  Then:  The resource shows a completed state immediately
+
+================================================================================
+ISSUE #23 — Frontend: Readiness flag — raise and aging indicator
+AC: Only one flag per goal; button hidden when flag is active
+    Aging shown accurately
+    FR18, FR19 covered
+================================================================================
+
+TEST-23.1 [readiness] Learner sees "I'm ready" button on active goal card
+  Given: I am logged in as 'learner'
+  And:   I have an active goal with no current readiness flag
+  Then:  I see an "I'm ready" button on the goal card
+
+TEST-23.2 [readiness] Learner can raise a readiness flag
+  Given: I can see the "I'm ready" button on a goal card
+  When:  I click the "I'm ready" button
+  Then:  The flag is raised and the button is hidden/disabled
+  And:   The goal card shows the active flag state
+
+TEST-23.3 [readiness] "I'm ready" button is hidden when flag is already active
+  Given: A readiness flag is already active for a goal
+  When:  I view that goal card
+  Then:  The "I'm ready" button is NOT visible
+
+TEST-23.4 [readiness] Active flag shows aging indicator
+  Given: A readiness flag was raised 2 days ago
+  When:  I view the goal card
+  Then:  I see "Raised 2 days ago" (or equivalent aging text)
+
+TEST-23.5 [readiness] Learner can dismiss their own flag
+  Given: I have an active readiness flag on a goal
+  When:  I dismiss the flag
+  Then:  The flag is removed and the "I'm ready" button reappears
+
+================================================================================
+ISSUE #27 — Frontend: Coach dashboard page
+AC: In 30 seconds, Nathalie sees: Lea's flag (2 days), Thomas inactive (23 days)
+    FR25, FR26, FR27, FR28, FR29 covered
+================================================================================
+
+TEST-27.1 [coach-dash] Coach lands on dashboard after sign-in
+  Given: I sign in as 'dotnet' (Nathalie — .NET coach)
+  When:  Sign-in completes
+  Then:  I land on the coach dashboard page
+
+TEST-27.2 [coach-dash] Dashboard shows a row per consultant in coach's team
+  Given: I am on the coach dashboard as 'dotnet'
+  Then:  I see a row for each consultant in the .NET team
+
+TEST-27.3 [coach-dash] Dashboard row shows active goal count per consultant
+  Given: I am on the coach dashboard
+  Then:  Each consultant row shows their active goal count
+
+TEST-27.4 [coach-dash] Dashboard shows readiness flags with age
+  Given: Lea has a readiness flag raised 2 days ago
+  When:  Nathalie views her dashboard
+  Then:  Lea's row shows a readiness flag with "2 days" aging
+
+TEST-27.5 [coach-dash] Inactive consultant is highlighted on dashboard
+  Given: Thomas has not been active for 23 days
+  When:  Nathalie views her dashboard
+  Then:  Thomas's row is visually highlighted (e.g. amber/red) as inactive
+
+TEST-27.6 [coach-dash] Readiness flags are sorted oldest first
+  Given: Multiple consultants have readiness flags of different ages
+  When:  I view the dashboard
+  Then:  The consultant with the oldest flag appears first in the flags list
+
+TEST-27.7 [coach-dash] Clicking a consultant row navigates to their profile
+  Given: I am on the coach dashboard
+  When:  I click on a consultant's row
+  Then:  I navigate to that consultant's profile page
+
+TEST-27.8 [coach-dash] Dashboard shows overdue goal count per consultant
+  Given: A consultant has at least one overdue goal
+  When:  I view the dashboard
+  Then:  Their row shows an overdue goal count with a visual indicator
+
+TEST-27.9 [coach-dash] Coach cannot see consultants from other teams
+  Given: I am logged in as 'java' (Java team coach)
+  When:  I view the coach dashboard
+  Then:  I only see consultants from the Java team
+  And:   I do NOT see consultants from the .NET team
+
+================================================================================
+ISSUE #28 — Frontend: Consultant profile and activity history for coach
+AC: No need to dig through emails — all context in one view
+    Activity sorted newest first
+    FR30 covered
+================================================================================
+
+TEST-28.1 [consultant-profile] Coach can view a consultant's profile
+  Given: I am on the coach dashboard as 'dotnet'
+  When:  I click on Lea's row
+  Then:  I see Lea's profile page with her current skill niveaux and active goals
+
+TEST-28.2 [consultant-profile] Profile shows current skill niveaux
+  Given: I am viewing a consultant's profile
+  Then:  I see their current validated niveau for each skill
+
+TEST-28.3 [consultant-profile] Profile shows active goals
+  Given: I am viewing a consultant's profile
+  Then:  I see their active goals listed
+
+TEST-28.4 [activity-feed] Profile shows recent activity feed
+  Given: I am viewing a consultant's profile
+  Then:  I see an activity feed showing recent events
+
+TEST-28.5 [activity-feed] Activity feed contains completed resources, flags, validations, sessions
+  Given: The consultant has completed resources, raised flags, and received validations
+  Then:  The activity feed shows all these event types
+
+TEST-28.6 [activity-feed] Activity feed is sorted newest first
+  Given: I am viewing a consultant's activity feed with multiple events
+  Then:  The most recent event appears at the top
+
+================================================================================
+ISSUE #29 — Frontend: Live session mode — 2-tap validation and goal setting
+AC: Nathalie validates Clean Code n1→n2 in 2 taps with inline note
+    New goal visible on Lea's roadmap immediately after session close
+    Session recorded in activity history
+    FR31, FR32, FR33, FR34, FR35, FR37 covered
+================================================================================
+
+TEST-29.1 [session] Coach can start a session from consultant profile
+  Given: I am viewing a consultant's profile as coach
+  When:  I click "Start Session"
+  Then:  Live session mode is activated
+
+TEST-29.2 [session] Live session mode shows pending validations and active goals only
+  Given: I am in live session mode for a consultant
+  Then:  The view is focused, showing: pending validations + active goals
+  And:   Non-essential UI is collapsed/hidden
+
+TEST-29.3 [session] Coach can validate a skill in 2 taps
+  Given: I am in live session mode
+  When:  I tap on the skill I want to validate (tap 1)
+  And:   I select the new niveau (tap 2)
+  Then:  The validation is recorded
+  And:   The skill node updates to show the new niveau
+
+TEST-29.4 [session] Coach can add inline session notes
+  Given: I am in live session mode
+  When:  I type in the session notes text area
+  Then:  The notes are saved with the session
+
+TEST-29.5 [session] Coach can create a new goal during a session
+  Given: I am in live session mode
+  When:  I fill in the SMART goal creation form (skill, niveau range, deadline)
+  And:   I submit
+  Then:  The new goal is created
+
+TEST-29.6 [session] New goal is visible on consultant's roadmap immediately after session close
+  Given: I created a new goal during the session
+  When:  I click "End Session" to close the session
+  And:   The learner views their roadmap
+  Then:  The new goal appears on their roadmap without needing a page refresh
+
+TEST-29.7 [session] Ended session is recorded in activity history
+  Given: I have ended a session for a consultant
+  When:  I view the consultant's activity feed
+  Then:  The session appears as an entry in the activity history
+
+TEST-29.8 [session] Learner cannot access session validation endpoints (403)
+  Given: I am logged in as 'learner'
+  When:  I attempt to POST to the validation endpoint directly
+  Then:  I receive a 403 Forbidden response
+
+================================================================================
+CROSS-CUTTING SECURITY TESTS (from Issue #32 + Issue #2)
+================================================================================
+
+TEST-SEC.1 [security] Manager cannot see consultants from another team
+  Given: I am logged in as 'java' (Java team coach)
+  When:  I attempt to access a consultant from the .NET team via direct URL
+  Then:  I receive a 403 or empty result (not their data)
+
+TEST-SEC.2 [security] Learner cannot call coach/admin endpoints
+  Given: I am logged in as 'learner'
+  When:  I POST to a coach-only endpoint (e.g. create goal, validate skill)
+  Then:  I receive a 403 Forbidden response
+
+TEST-SEC.3 [security] Archived consultant does not appear in coach dashboard
+  Given: A consultant has been archived
+  When:  Their coach views the dashboard
+  Then:  The archived consultant is NOT shown
+
+TEST-SEC.4 [security] Backoffice cannot access raw session notes
+  Given: I am logged in as 'backoffice'
+  When:  I request session data
+  Then:  Session notes are NOT included in the response
+
+================================================================================
+END OF TESTING ISSUES
+Total test cases: 70
+Mapped to issues: #4, #5, #12, #16, #17, #21, #22, #23, #27, #28, #29, #32
+================================================================================
