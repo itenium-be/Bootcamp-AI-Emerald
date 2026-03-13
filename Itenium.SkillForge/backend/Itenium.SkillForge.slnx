@@ -14,6 +14,7 @@
   <Project Path="Itenium.SkillForge.Data/Itenium.SkillForge.Data.csproj" />
   <Project Path="Itenium.SkillForge.Services/Itenium.SkillForge.Services.csproj" />
   <Project Path="Itenium.SkillForge.WebApi/Itenium.SkillForge.WebApi.csproj" />
+  <Project Path="Itenium.SkillForge.SeedTool/Itenium.SkillForge.SeedTool.csproj" />
   <Project Path="Itenium.SkillForge.Services.Tests/Itenium.SkillForge.Services.Tests.csproj" />
   <Project Path="Itenium.SkillForge.WebApi.Tests/Itenium.SkillForge.WebApi.Tests.csproj" />
 </Solution>

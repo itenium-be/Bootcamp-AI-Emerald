@@ -1,3 +1,4 @@
+using Itenium.SkillForge.Services.Import;
 using Itenium.SkillForge.Services.Profiles;
 using Itenium.SkillForge.Services.SkillCatalogue;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<ISkillCatalogueService, SkillCatalogueService>();
         services.AddScoped<IProfileService, ProfileService>();
+        services.AddScoped<ISkillCatalogueImporter, SkillCatalogueImporter>();
         return services;
     }
 }
