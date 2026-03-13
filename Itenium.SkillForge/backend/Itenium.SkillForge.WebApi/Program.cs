@@ -24,6 +24,13 @@ try
 
     builder.Services.AddScoped<ISkillForgeUser, SkillForgeUser>();
 
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy(SkillForgePolicies.Manager, policy => policy.RequireRole(SkillForgeRoles.Manager));
+        options.AddPolicy(SkillForgePolicies.Backoffice, policy => policy.RequireRole(SkillForgeRoles.Backoffice));
+        options.AddPolicy(SkillForgePolicies.ManagerOrBackoffice, policy => policy.RequireRole(SkillForgeRoles.Manager, SkillForgeRoles.Backoffice));
+    });
+
     builder.AddForgeControllers();
     builder.AddForgeSwagger();
     builder.AddForgeHealthChecks();
