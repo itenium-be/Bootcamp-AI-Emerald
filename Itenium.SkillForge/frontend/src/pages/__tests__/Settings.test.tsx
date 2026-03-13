@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { vi, type Mock } from 'vitest';
+import { vi } from 'vitest';
 import { Settings } from '../Settings';
 
 vi.mock('react-i18next', () => ({
