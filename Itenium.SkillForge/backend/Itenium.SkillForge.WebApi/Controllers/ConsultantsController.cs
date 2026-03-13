@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Itenium.Forge.Security.OpenIddict;
 using Itenium.SkillForge.Data;
 using Itenium.SkillForge.Services;
 using Itenium.SkillForge.Services.Coaching;
@@ -38,6 +39,36 @@ public class ConsultantsController : ControllerBase
         _goals = goals;
         _flags = flags;
         _db = db;
+    }
+
+    // ── Team members list (#52) ───────────────────────────────────────────────
+
+    /// <summary>
+    /// Returns all consultants visible to the caller (team-scoped for managers, all for backoffice).
+    /// </summary>
+    [HttpGet]
+    [Authorize(Policy = SkillForgePolicies.ManagerOrBackoffice)]
+    [ProducesResponseType(typeof(IReadOnlyList<TeamMemberResponse>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetTeamMembers(CancellationToken ct = default)
+    {
+        var consultants = await _db.Consultants
+            .ApplyTeamScope(_scope)
+            .Include(c => c.Profile)
+            .ToListAsync(ct);
+
+        var userIds = consultants.Select(c => c.UserId).ToHashSet(StringComparer.Ordinal);
+        var users = await _db.Set<ForgeUser>()
+            .Where(u => userIds.Contains(u.Id))
+            .ToListAsync(ct);
+        var userMap = users.ToDictionary(u => u.Id, StringComparer.Ordinal);
+
+        var response = consultants.Select(c =>
+        {
+            userMap.TryGetValue(c.UserId, out var u);
+            return new TeamMemberResponse(c.Id, u?.FirstName, u?.LastName, u?.Email ?? string.Empty, c.TeamId, c.Profile?.Name);
+        }).ToList();
+
+        return Ok(response);
     }
 
     // ── Profile assignment ────────────────────────────────────────────────────
@@ -206,3 +237,11 @@ public class ConsultantsController : ControllerBase
         return id;
     }
 }
+
+public record TeamMemberResponse(
+    int Id,
+    string? FirstName,
+    string? LastName,
+    string Email,
+    int TeamId,
+    string? ProfileName);
