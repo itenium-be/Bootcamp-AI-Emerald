@@ -1,3 +1,4 @@
+using Itenium.SkillForge.Services.Activity;
 using Itenium.SkillForge.Services.Coaching;
 using Itenium.SkillForge.Services.Goals;
 using Itenium.SkillForge.Services.Import;
@@ -27,6 +28,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ISkillValidationService, SkillValidationService>();
         services.AddScoped<ICoachingSessionService, CoachingSessionService>();
         services.AddScoped<ICoachDashboardService, CoachDashboardService>();
+        services.AddScoped<IActivityService, ActivityService>();
         return services;
     }
 }

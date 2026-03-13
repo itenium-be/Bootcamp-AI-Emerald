@@ -35,6 +35,9 @@ public class GoalEntity
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+    /// <summary>Set when Status transitions to Achieved.</summary>
+    public DateTime? AchievedAt { get; set; }
+
     public ICollection<GoalResourceEntity> GoalResources { get; set; } = [];
 
     public ReadinessFlagEntity? ReadinessFlag { get; set; }

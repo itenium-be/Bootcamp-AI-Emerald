@@ -187,6 +187,31 @@
     "requiredFields": "Please fill in all required fields",
     "createError": "Failed to create resource"
   },
+  "team": {
+    "title": "Team Members",
+    "subtitle": "Overview of your team's progress and activity",
+    "noMembers": "No team members found",
+    "searchPlaceholder": "Search by email or profile...",
+    "activeGoals": "{{count}} active goals",
+    "activeFlags": "{{count}} flags",
+    "viewActivity": "View Activity",
+    "profile": "Profile",
+    "noProfile": "No profile"
+  },
+  "activity": {
+    "title": "Activity History",
+    "subtitle": "Timeline of skill progress and learning activity",
+    "noActivity": "No activity recorded yet",
+    "noActivityHint": "Skill validations, completed goals and resources will appear here",
+    "seniorityProgress": "Seniority Progress",
+    "eventType": {
+      "SkillValidated": "Skill Validated",
+      "GoalAchieved": "Goal Achieved",
+      "ResourceCompleted": "Resource Completed"
+    },
+    "backToTeam": "Back to Team",
+    "niveau": "Niveau {{niveau}}"
+  },
   "roadmap": {
     "title": "My Roadmap",
     "subtitle": "Your personalized skill development path",
