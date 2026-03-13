@@ -27,6 +27,7 @@ describe('useAuthStore', () => {
         sub: 'user-123',
         name: 'Alice',
         email: 'alice@example.com',
+        roles: ['backoffice'],
         role: 'backoffice',
         exp: Math.floor(Date.now() / 1000) + 3600,
       });
@@ -40,6 +41,7 @@ describe('useAuthStore', () => {
         id: 'user-123',
         name: 'Alice',
         email: 'alice@example.com',
+        roles: ['backoffice'],
         isBackOffice: true,
       });
     });
@@ -80,6 +82,27 @@ describe('useAuthStore', () => {
       useAuthStore.getState().setToken(token);
 
       expect(useAuthStore.getState().user?.isBackOffice).toBe(false);
+    });
+
+    it('stores all roles from the JWT', () => {
+      const token = createToken({
+        sub: 'user-333',
+        name: 'Eve',
+        email: 'eve@example.com',
+        role: ['coach', 'backoffice'],
+      });
+
+      useAuthStore.getState().setToken(token);
+
+      expect(useAuthStore.getState().user?.roles).toEqual(['coach', 'backoffice']);
+    });
+
+    it('stores empty roles array when role is missing', () => {
+      const token = createToken({ sub: 'user-444', name: 'Frank' });
+
+      useAuthStore.getState().setToken(token);
+
+      expect(useAuthStore.getState().user?.roles).toEqual([]);
     });
 
     it('falls back to preferred_username for email and name', () => {
