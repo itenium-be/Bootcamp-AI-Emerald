@@ -108,7 +108,7 @@ namespace Itenium.SkillForge.Data.Migrations
                     SkillId = table.Column<int>(type: "integer", nullable: false),
                     CurrentNiveau = table.Column<int>(type: "integer", nullable: false),
                     TargetNiveau = table.Column<int>(type: "integer", nullable: false),
-                    Deadline = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Deadline = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Status = table.Column<int>(type: "integer", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -412,7 +412,8 @@ namespace Itenium.SkillForge.Data.Migrations
                 name: "IX_ReadinessFlags_GoalId",
                 table: "ReadinessFlags",
                 column: "GoalId",
-                unique: true);
+                unique: true,
+                filter: "\"DismissedAt\" IS NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ResourceCompletions_GoalId",
@@ -420,9 +421,10 @@ namespace Itenium.SkillForge.Data.Migrations
                 column: "GoalId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ResourceCompletions_ResourceId",
+                name: "IX_ResourceCompletions_ResourceId_UserId",
                 table: "ResourceCompletions",
-                column: "ResourceId");
+                columns: new[] { "ResourceId", "UserId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Resources_SkillId",

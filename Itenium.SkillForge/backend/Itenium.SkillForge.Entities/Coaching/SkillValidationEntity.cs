@@ -5,17 +5,18 @@ namespace Itenium.SkillForge.Entities.Coaching;
 
 /// <summary>
 /// An immutable record of a coach validating a skill niveau for a consultant.
-/// CoachUserId and ValidatedAt use init-only accessors to prevent mutation after creation.
+/// ConsultantUserId, CoachUserId and ValidatedAt are all init-only — the record
+/// can never be re-attributed to a different person after creation.
 /// </summary>
 public class SkillValidationEntity
 {
     [Key]
     public int Id { get; set; }
 
-    /// <summary>FK to the identity user who is the consultant.</summary>
+    /// <summary>FK to the identity user who is the consultant. Immutable after creation.</summary>
     [Required]
     [MaxLength(EntityConstants.UserIdMaxLength)]
-    public required string ConsultantUserId { get; set; }
+    public required string ConsultantUserId { get; init; }
 
     /// <summary>FK to the identity user who performed the validation. Immutable after creation.</summary>
     [Required]

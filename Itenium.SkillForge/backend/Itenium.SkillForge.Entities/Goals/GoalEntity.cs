@@ -28,7 +28,8 @@ public class GoalEntity
 
     public int TargetNiveau { get; set; }
 
-    public DateTime Deadline { get; set; }
+    /// <summary>Null means no deadline set. Nullable to avoid silent 0001-01-01 default.</summary>
+    public DateTime? Deadline { get; set; }
 
     public GoalStatus Status { get; set; } = GoalStatus.Active;
 

@@ -147,7 +147,8 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("GoalId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("\"DismissedAt\" IS NULL");
 
                     b.ToTable("ReadinessFlags");
                 });
@@ -281,7 +282,7 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.Property<int>("CurrentNiveau")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("Deadline")
+                    b.Property<DateTime?>("Deadline")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("SkillId")
@@ -407,7 +408,8 @@ namespace Itenium.SkillForge.Data.Migrations
 
                     b.HasIndex("GoalId");
 
-                    b.HasIndex("ResourceId");
+                    b.HasIndex("ResourceId", "UserId")
+                        .IsUnique();
 
                     b.ToTable("ResourceCompletions");
                 });
