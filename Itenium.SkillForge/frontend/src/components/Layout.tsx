@@ -43,7 +43,6 @@ import {
   GraduationCap,
   Award,
   Settings,
-  Library,
   Layers,
   TrendingUp,
   BarChart3,
@@ -243,7 +242,6 @@ export function Layout() {
 
   // Catalog - shown for all users
   const catalogNavItems = [
-    { path: '/catalog', icon: Library, label: t('nav.catalog') },
     { path: '/skills', icon: Layers, label: t('nav.skills') },
     { path: '/resources', icon: BookOpen, label: t('nav.resources') },
   ];
