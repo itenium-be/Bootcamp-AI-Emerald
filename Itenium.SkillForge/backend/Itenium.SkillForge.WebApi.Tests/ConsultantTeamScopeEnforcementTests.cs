@@ -111,7 +111,7 @@ public class ConsultantTeamScopeEnforcementTests : DatabaseTestBase
 
         var dotnetId = (await Db.CompetenceCentreProfiles.FirstAsync(p => p.Name == ".NET")).Id;
         var teamAScope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), teamAScope, new RoadmapService(Db), Db);
+        var controller = new ConsultantsController(new ProfileService(Db), teamAScope, new RoadmapService(Db), Db, new SkillValidationService(Db));
 
         var result = await controller.AssignProfile(teamBConsultant.Id, new AssignProfileRequest(dotnetId));
 

@@ -1,3 +1,4 @@
+using Itenium.SkillForge.Services.Coaching;
 using Itenium.SkillForge.Services.Import;
 using Itenium.SkillForge.Services.Profiles;
 using Itenium.SkillForge.Services.Roadmap;
@@ -18,6 +19,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProfileService, ProfileService>();
         services.AddScoped<ISkillCatalogueImporter, SkillCatalogueImporter>();
         services.AddScoped<IRoadmapService, RoadmapService>();
+        services.AddScoped<ISkillValidationService, SkillValidationService>();
         return services;
     }
 }
