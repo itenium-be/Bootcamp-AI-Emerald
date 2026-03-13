@@ -24,6 +24,7 @@ public class ConsultantsController : ControllerBase
     private readonly IGoalService _goals;
     private readonly IReadinessFlagService _flags;
     private readonly AppDbContext _db;
+    private readonly ISkillValidationService _validations;
 
     public ConsultantsController(
         IProfileService profiles,
@@ -31,7 +32,8 @@ public class ConsultantsController : ControllerBase
         IRoadmapService roadmap,
         IGoalService goals,
         IReadinessFlagService flags,
-        AppDbContext db)
+        AppDbContext db,
+        ISkillValidationService validations)
     {
         _profiles = profiles;
         _scope = scope;
@@ -39,6 +41,7 @@ public class ConsultantsController : ControllerBase
         _goals = goals;
         _flags = flags;
         _db = db;
+        _validations = validations;
     }
 
     // ── Team members list (#52) ───────────────────────────────────────────────
@@ -197,6 +200,28 @@ public class ConsultantsController : ControllerBase
     {
         var result = await _flags.GetActiveFlagsForConsultantAsync(id, ct);
         return Ok(result);
+    }
+
+    // ── Skill validation (#25) ────────────────────────────────────────────────
+
+    /// <summary>
+    /// Records an immutable skill validation for a consultant.
+    /// Only manager role can validate. Multiple validations per skill are allowed;
+    /// the latest determines the consultant's current niveau.
+    /// </summary>
+    [HttpPost("{id:int}/validations")]
+    [Authorize(Policy = SkillForgePolicies.Manager)]
+    [ProducesResponseType(typeof(SkillValidationRecord), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ValidateSkill(
+        int id,
+        [FromBody] ValidateSkillRequest request,
+        CancellationToken ct = default)
+    {
+        var coachUserId = GetCurrentUserId();
+        var result = await _validations.ValidateSkillAsync(id, coachUserId, request.SkillId, request.NewNiveau, request.SessionId, _scope, ct);
+        if (result is null) return NotFound();
+        return CreatedAtAction(nameof(ValidateSkill), new { id }, result);
     }
 
     // ── Helpers ───────────────────────────────────────────────────────────────
