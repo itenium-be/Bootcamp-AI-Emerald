@@ -3,31 +3,27 @@ import { useQuery } from '@tanstack/react-query';
 import { Link, useParams } from '@tanstack/react-router';
 import { ArrowLeft, CheckCircle2, AlertTriangle, ChevronRight } from 'lucide-react';
 import { fetchSkillDetail } from '@/api/client';
-
-const CATEGORY_COLORS: Record<string, string> = {
-  'Language & Runtime': 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300',
-  'Web & API': 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300',
-  'Data & Persistence': 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300',
-  Testing: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300',
-  'Architecture & Design': 'bg-rose-100 text-rose-800 dark:bg-rose-900/40 dark:text-rose-300',
-  'Tooling & DevOps': 'bg-teal-100 text-teal-800 dark:bg-teal-900/40 dark:text-teal-300',
-};
-
-const defaultCategoryColor = 'bg-muted text-muted-foreground';
-
-function categoryColor(name: string) {
-  return CATEGORY_COLORS[name] ?? defaultCategoryColor;
-}
+import { categoryColor } from '@/lib/skillCategories';
 
 export function SkillDetail() {
   const { t } = useTranslation();
-  const { skillId } = useParams({ strict: false }) as { skillId: string };
+  const { skillId } = useParams({ from: '/_authenticated/skills/$skillId' });
   const id = Number(skillId);
 
   const { data: skill, isLoading } = useQuery({
     queryKey: ['skills', id],
     queryFn: () => fetchSkillDetail(id),
   });
+
+  const backLink = (
+    <Link
+      to="/skills"
+      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+    >
+      <ArrowLeft className="size-4" />
+      {t('skills.backToSkills')}
+    </Link>
+  );
 
   if (isLoading) {
     return <div className="p-6 text-muted-foreground">{t('common.loading')}</div>;
@@ -36,13 +32,7 @@ export function SkillDetail() {
   if (!skill) {
     return (
       <div className="space-y-6">
-        <Link
-          to="/skills"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-        >
-          <ArrowLeft className="size-4" />
-          {t('skills.backToSkills')}
-        </Link>
+        {backLink}
 
         <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-20 text-center">
           <AlertTriangle className="size-10 text-muted-foreground/50 mb-3" />
@@ -57,14 +47,7 @@ export function SkillDetail() {
 
   return (
     <div className="space-y-6">
-      {/* Back link */}
-      <Link
-        to="/skills"
-        className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-      >
-        <ArrowLeft className="size-4" />
-        {t('skills.backToSkills')}
-      </Link>
+      {backLink}
 
       {/* Header card */}
       <div className="rounded-xl border bg-card p-6 shadow-sm">
