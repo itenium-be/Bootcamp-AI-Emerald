@@ -72,3 +72,42 @@ export async function fetchCourses(): Promise<Course[]> {
   const response = await api.get<Course[]>('/api/course');
   return response.data;
 }
+
+export interface SkillListItem {
+  id: number;
+  name: string;
+  categoryName: string;
+  levelCount: number;
+  description: string | null;
+}
+
+export interface SkillLevel {
+  niveau: number;
+  descriptor: string;
+}
+
+export interface SkillPrerequisite {
+  requiredSkillId: number;
+  requiredSkillName: string;
+  requiredMinNiveau: number;
+}
+
+export interface SkillDetail {
+  id: number;
+  name: string;
+  categoryName: string;
+  levelCount: number;
+  description: string | null;
+  levels: SkillLevel[];
+  prerequisites: SkillPrerequisite[];
+}
+
+export async function fetchSkills(params?: { categoryId?: number; profileId?: number }): Promise<SkillListItem[]> {
+  const response = await api.get<SkillListItem[]>('/api/skills', { params });
+  return response.data;
+}
+
+export async function fetchSkillDetail(id: number): Promise<SkillDetail> {
+  const response = await api.get<SkillDetail>(`/api/skills/${id}`);
+  return response.data;
+}

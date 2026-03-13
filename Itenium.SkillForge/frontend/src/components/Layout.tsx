@@ -232,7 +232,10 @@ export function Layout() {
   ];
 
   // Catalog - shown for all users
-  const catalogNavItems = [{ path: '/catalog', icon: Library, label: t('nav.catalog') }];
+  const catalogNavItems = [
+    { path: '/catalog', icon: Library, label: t('nav.catalog') },
+    { path: '/skills', icon: CheckCircle, label: t('nav.skills') },
+  ];
 
   // Team section - shown for managers
   const teamNavItems = [
