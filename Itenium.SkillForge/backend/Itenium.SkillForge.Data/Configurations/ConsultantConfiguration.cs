@@ -10,5 +10,7 @@ internal sealed class ConsultantConfiguration : IEntityTypeConfiguration<Consult
     {
         builder.HasIndex(x => x.UserId)
             .IsUnique();
+
+        builder.HasQueryFilter(c => c.ArchivedAt == null);
     }
 }

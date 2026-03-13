@@ -7,7 +7,7 @@ namespace Itenium.SkillForge.Entities.Consultants;
 /// SkillForge-specific data for a consultant user.
 /// UserId references the identity user (ForgeUser) — one record per consultant.
 /// </summary>
-public class ConsultantEntity
+public class ConsultantEntity : ITeamScoped
 {
     [Key]
     public int Id { get; set; }
@@ -15,6 +15,8 @@ public class ConsultantEntity
     [Required]
     [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string UserId { get; set; }
+
+    public int TeamId { get; set; }
 
     public int? ProfileId { get; set; }
 

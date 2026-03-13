@@ -152,7 +152,7 @@ public class ProfileServiceTests : DatabaseTestBase
     {
         var dotnet = await Db.CompetenceCentreProfiles.FirstAsync(p => p.Name == ".NET");
 
-        var result = await _service.AssignProfileToConsultantAsync(int.MaxValue, dotnet.Id);
+        var result = await _service.AssignProfileToConsultantAsync(int.MaxValue, dotnet.Id, new FakeTeamQueryScope(isBackOffice: true));
 
         Assert.That(result, Is.False);
     }
@@ -165,7 +165,7 @@ public class ProfileServiceTests : DatabaseTestBase
         await Db.SaveChangesAsync();
         var dotnet = await Db.CompetenceCentreProfiles.FirstAsync(p => p.Name == ".NET");
 
-        var result = await _service.AssignProfileToConsultantAsync(consultant.Id, dotnet.Id);
+        var result = await _service.AssignProfileToConsultantAsync(consultant.Id, dotnet.Id, new FakeTeamQueryScope(isBackOffice: true));
 
         Assert.That(result, Is.True);
         var updated = await Db.Consultants.FindAsync(consultant.Id);
@@ -180,7 +180,7 @@ public class ProfileServiceTests : DatabaseTestBase
         Db.Consultants.Add(consultant);
         await Db.SaveChangesAsync();
 
-        var result = await _service.AssignProfileToConsultantAsync(consultant.Id, null);
+        var result = await _service.AssignProfileToConsultantAsync(consultant.Id, null, new FakeTeamQueryScope(isBackOffice: true));
 
         Assert.That(result, Is.True);
         var updated = await Db.Consultants.FindAsync(consultant.Id);

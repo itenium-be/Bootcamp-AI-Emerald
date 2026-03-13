@@ -124,6 +124,33 @@
     "notFound": "Vaardigheid niet gevonden",
     "notFoundHint": "Deze vaardigheid bestaat niet of is verwijderd"
   },
+  "users": {
+    "title": "Gebruikersbeheer",
+    "subtitle": "Gebruikers aanmaken, beheren en archiveren",
+    "allUsers": "Alle gebruikers",
+    "unassigned": "Niet-toegewezen consultants",
+    "searchPlaceholder": "Zoek op naam of e-mail...",
+    "allRoles": "Alle rollen",
+    "showArchived": "Gearchiveerde weergeven",
+    "createUser": "Gebruiker aanmaken",
+    "name": "Naam",
+    "firstName": "Voornaam",
+    "lastName": "Achternaam",
+    "email": "E-mail",
+    "role": "Rol",
+    "teams": "Teams",
+    "status": "Status",
+    "archived": "Gearchiveerd",
+    "archive": "Archiveren",
+    "restore": "Herstellen",
+    "noUsers": "Geen gebruikers gevonden",
+    "createError": "Gebruiker aanmaken mislukt. Controleer de rol en probeer opnieuw.",
+    "roles": {
+      "learner": "Leerling",
+      "manager": "Manager",
+      "backoffice": "Backoffice"
+    }
+  },
   "errors": {
     "sessionExpired": "Sessie verlopen!",
     "internalServerError": "Interne serverfout!"

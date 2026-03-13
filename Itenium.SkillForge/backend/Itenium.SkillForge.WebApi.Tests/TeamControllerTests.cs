@@ -8,14 +8,14 @@ namespace Itenium.SkillForge.WebApi.Tests;
 [TestFixture]
 public class TeamControllerTests : DatabaseTestBase
 {
-    private ISkillForgeUser _user = null!;
+    private ITeamQueryScope _teamScope = null!;
     private TeamController _sut = null!;
 
     [SetUp]
     public void Setup()
     {
-        _user = Substitute.For<ISkillForgeUser>();
-        _sut = new TeamController(Db, _user);
+        _teamScope = Substitute.For<ITeamQueryScope>();
+        _sut = new TeamController(Db, _teamScope);
     }
 
     [Test]
@@ -26,7 +26,7 @@ public class TeamControllerTests : DatabaseTestBase
             new TeamEntity { Name = ".NET" },
             new TeamEntity { Name = "QA" });
         await Db.SaveChangesAsync();
-        _user.IsBackOffice.Returns(true);
+        _teamScope.IsBackOffice.Returns(true);
 
         var result = await _sut.GetUserTeams();
 
@@ -45,8 +45,8 @@ public class TeamControllerTests : DatabaseTestBase
         var qaTeam = new TeamEntity { Name = "QA" };
         Db.Teams.AddRange(javaTeam, dotnetTeam, qaTeam);
         await Db.SaveChangesAsync();
-        _user.IsBackOffice.Returns(false);
-        _user.Teams.Returns(new[] { javaTeam.Id, qaTeam.Id });
+        _teamScope.IsBackOffice.Returns(false);
+        _teamScope.TeamIds.Returns(new[] { javaTeam.Id, qaTeam.Id });
 
         var result = await _sut.GetUserTeams();
 
@@ -64,8 +64,8 @@ public class TeamControllerTests : DatabaseTestBase
             new TeamEntity { Name = "Java" },
             new TeamEntity { Name = ".NET" });
         await Db.SaveChangesAsync();
-        _user.IsBackOffice.Returns(false);
-        _user.Teams.Returns(Array.Empty<int>());
+        _teamScope.IsBackOffice.Returns(false);
+        _teamScope.TeamIds.Returns(Array.Empty<int>());
 
         var result = await _sut.GetUserTeams();
 
@@ -79,8 +79,8 @@ public class TeamControllerTests : DatabaseTestBase
         var javaTeam = new TeamEntity { Name = "Java" };
         Db.Teams.Add(javaTeam);
         await Db.SaveChangesAsync();
-        _user.IsBackOffice.Returns(false);
-        _user.Teams.Returns(new[] { javaTeam.Id, 999 });
+        _teamScope.IsBackOffice.Returns(false);
+        _teamScope.TeamIds.Returns(new[] { javaTeam.Id, 999 });
 
         var result = await _sut.GetUserTeams();
 

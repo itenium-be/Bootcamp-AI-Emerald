@@ -18,6 +18,8 @@
     <!-- Analyzers -->
     <PackageVersion Include="Meziantou.Analyzer" Version="2.0.298" />
     <PackageVersion Include="Roslynator.Analyzers" Version="4.15.0" />
+    <!-- CSV parsing -->
+    <PackageVersion Include="CsvHelper" Version="33.0.1" />
     <!-- Testing -->
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
