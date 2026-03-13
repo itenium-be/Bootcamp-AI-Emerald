@@ -1,6 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { SkillCatalogue } from '@/pages/SkillCatalogue';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated/skills')({
-  component: SkillCatalogue,
+  component: Outlet,
 });
