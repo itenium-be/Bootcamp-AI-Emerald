@@ -80,6 +80,9 @@ internal sealed class GoalService : IGoalService
         goal.Deadline = request.Deadline;
         goal.Status = request.Status;
 
+        if (request.Status == GoalStatus.Achieved && goal.AchievedAt is null)
+            goal.AchievedAt = DateTime.UtcNow;
+
         await _db.SaveChangesAsync(ct);
         return await GetGoalAsync(goalId, ct);
     }

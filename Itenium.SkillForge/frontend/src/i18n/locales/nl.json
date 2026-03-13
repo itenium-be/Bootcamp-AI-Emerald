@@ -187,6 +187,31 @@
     "requiredFields": "Vul alle verplichte velden in",
     "createError": "Bron aanmaken mislukt"
   },
+  "team": {
+    "title": "Teamleden",
+    "subtitle": "Overzicht van de voortgang en activiteit van uw team",
+    "noMembers": "Geen teamleden gevonden",
+    "searchPlaceholder": "Zoeken op e-mail of profiel...",
+    "activeGoals": "{{count}} actieve doelen",
+    "activeFlags": "{{count}} vlaggen",
+    "viewActivity": "Bekijk activiteit",
+    "profile": "Profiel",
+    "noProfile": "Geen profiel"
+  },
+  "activity": {
+    "title": "Activiteitsgeschiedenis",
+    "subtitle": "Tijdlijn van vaardigheidsvoortgang en leeractiviteit",
+    "noActivity": "Nog geen activiteit geregistreerd",
+    "noActivityHint": "Vaardigheidsvalidaties, behaalde doelen en bronnen verschijnen hier",
+    "seniorityProgress": "Senioriteitvoortgang",
+    "eventType": {
+      "SkillValidated": "Vaardigheid Gevalideerd",
+      "GoalAchieved": "Doel Behaald",
+      "ResourceCompleted": "Bron Voltooid"
+    },
+    "backToTeam": "Terug naar Team",
+    "niveau": "Niveau {{niveau}}"
+  },
   "roadmap": {
     "title": "Mijn Roadmap",
     "subtitle": "Uw persoonlijk ontwikkeltraject voor vaardigheden",

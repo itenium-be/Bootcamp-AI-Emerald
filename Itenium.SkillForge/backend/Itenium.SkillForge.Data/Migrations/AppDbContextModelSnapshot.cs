@@ -282,6 +282,9 @@ namespace Itenium.SkillForge.Data.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<DateTime?>("AchievedAt")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<int>("CurrentNiveau")
                         .HasColumnType("integer");
 

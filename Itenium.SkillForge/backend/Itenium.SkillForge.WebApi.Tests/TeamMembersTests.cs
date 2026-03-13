@@ -1,5 +1,6 @@
 using Itenium.SkillForge.Data;
 using Itenium.SkillForge.Entities.Consultants;
+using Itenium.SkillForge.Services.Activity;
 using Itenium.SkillForge.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -30,14 +31,14 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db, new SkillValidationService(Db));
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), new ActivityService(Db), Db, new SkillValidationService(Db));
 
         var result = await controller.GetTeamMembers();
 
         var ok = (OkObjectResult)result;
-        var members = (IReadOnlyList<TeamMemberResponse>)ok.Value!;
+        var members = (IReadOnlyList<ConsultantSummaryDto>)ok.Value!;
         Assert.That(members, Has.Count.EqualTo(1));
-        Assert.That(members[0].TeamId, Is.EqualTo(TeamA));
+        Assert.That(members[0].UserId, Is.EqualTo("user-tm-a1"));
     }
 
     [Test]
@@ -49,14 +50,14 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(isBackOffice: true);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db, new SkillValidationService(Db));
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), new ActivityService(Db), Db, new SkillValidationService(Db));
 
         var result = await controller.GetTeamMembers();
 
         var ok = (OkObjectResult)result;
-        var members = (IReadOnlyList<TeamMemberResponse>)ok.Value!;
-        Assert.That(members.Any(m => m.TeamId == TeamA), Is.True);
-        Assert.That(members.Any(m => m.TeamId == TeamB), Is.True);
+        var members = (IReadOnlyList<ConsultantSummaryDto>)ok.Value!;
+        Assert.That(members.Any(m => m.UserId == "user-tm-a2"), Is.True);
+        Assert.That(members.Any(m => m.UserId == "user-tm-b2"), Is.True);
     }
 
     [Test]
@@ -68,12 +69,12 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db, new SkillValidationService(Db));
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), new ActivityService(Db), Db, new SkillValidationService(Db));
 
         var result = await controller.GetTeamMembers();
 
         var ok = (OkObjectResult)result;
-        var members = (IReadOnlyList<TeamMemberResponse>)ok.Value!;
+        var members = (IReadOnlyList<ConsultantSummaryDto>)ok.Value!;
         Assert.That(members.Any(m => m.Id == archived.Id), Is.False);
         Assert.That(members.Any(m => m.Id == active.Id), Is.True);
     }
@@ -88,12 +89,12 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db, new SkillValidationService(Db));
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), new ActivityService(Db), Db, new SkillValidationService(Db));
 
         var result = await controller.GetTeamMembers();
 
         var ok = (OkObjectResult)result;
-        var members = (IReadOnlyList<TeamMemberResponse>)ok.Value!;
+        var members = (IReadOnlyList<ConsultantSummaryDto>)ok.Value!;
         var member = members.Single(m => m.Id == consultant.Id);
         Assert.That(member.ProfileName, Is.EqualTo(".NET"));
     }

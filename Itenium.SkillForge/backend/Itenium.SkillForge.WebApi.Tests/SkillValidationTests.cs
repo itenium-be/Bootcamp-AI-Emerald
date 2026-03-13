@@ -34,6 +34,7 @@ public class SkillValidationTests : DatabaseTestBase
             new RoadmapService(Db),
             new GoalService(Db),
             new ReadinessFlagService(Db),
+            new ActivityService(Db),
             Db,
             new SkillValidationService(Db));
 

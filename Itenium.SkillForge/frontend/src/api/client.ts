@@ -305,6 +305,44 @@ export async function rateResource(resourceId: number, isPositive: boolean): Pro
   await api.post(`/api/resources/${resourceId}/rate`, { isPositive });
 }
 
+// ── Activity & team members (#54, #57) ───────────────────────────────────────
+
+export type ActivityEventType = 'SkillValidated' | 'GoalAchieved' | 'ResourceCompleted';
+
+export interface ActivityEventDto {
+  eventType: ActivityEventType;
+  occurredAt: string;
+  description: string;
+  skillName: string | null;
+  niveau: number | null;
+  resourceTitle: string | null;
+}
+
+export interface ConsultantSummaryDto {
+  id: number;
+  userId: string;
+  email: string | null;
+  profileName: string | null;
+  teamName: string;
+  activeGoalCount: number;
+  activeFlagCount: number;
+}
+
+export async function fetchTeamMembers(): Promise<ConsultantSummaryDto[]> {
+  const response = await api.get<ConsultantSummaryDto[]>('/api/consultants');
+  return response.data;
+}
+
+export async function fetchConsultantActivityEvents(consultantId: number): Promise<ActivityEventDto[]> {
+  const response = await api.get<ActivityEventDto[]>(`/api/consultants/${consultantId}/activity`);
+  return response.data;
+}
+
+export async function fetchConsultantSeniorityProgress(consultantId: number): Promise<SeniorityProgressResult> {
+  const response = await api.get<SeniorityProgressResult>(`/api/consultants/${consultantId}/seniority-progress`);
+  return response.data;
+}
+
 export interface UserResponse {
   id: string;
   email: string;
@@ -345,20 +383,6 @@ export async function archiveUser(id: string): Promise<void> {
 
 export async function restoreUser(id: string): Promise<void> {
   await api.post(`/api/user/${id}/restore`);
-}
-
-export interface TeamMemberResponse {
-  id: number;
-  firstName: string | null;
-  lastName: string | null;
-  email: string;
-  teamId: number;
-  profileName: string | null;
-}
-
-export async function fetchTeamMembers(): Promise<TeamMemberResponse[]> {
-  const response = await api.get<TeamMemberResponse[]>('/api/consultants');
-  return response.data;
 }
 
 // ── Coach API ─────────────────────────────────────────────────────────────────
