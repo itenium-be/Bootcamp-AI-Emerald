@@ -5,4 +5,8 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Itenium.SkillForge.Entities\Itenium.SkillForge.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

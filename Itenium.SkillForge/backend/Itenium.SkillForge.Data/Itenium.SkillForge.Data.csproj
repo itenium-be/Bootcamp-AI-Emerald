@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Itenium.SkillForge.Entities\Itenium.SkillForge.Entities.csproj" />
+    <ProjectReference Include="..\Itenium.SkillForge.Services\Itenium.SkillForge.Services.csproj" />
   </ItemGroup>
 
 </Project>
