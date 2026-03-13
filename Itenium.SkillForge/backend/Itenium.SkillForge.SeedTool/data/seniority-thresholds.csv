@@ -1,0 +1,26 @@
+ProfileName,SeniorityLevel,SkillName,MinNiveau
+.NET,Junior,C#,2
+.NET,Junior,.NET,1
+.NET,Junior,ASP.NET Core,1
+.NET,Junior,Clean Code,1
+.NET,Medior,C#,4
+.NET,Medior,.NET,3
+.NET,Medior,ASP.NET Core,3
+.NET,Medior,Entity Framework Core,2
+.NET,Medior,Clean Code,3
+.NET,Senior,C#,6
+.NET,Senior,.NET,4
+.NET,Senior,ASP.NET Core,4
+.NET,Senior,Entity Framework Core,4
+.NET,Senior,Clean Code,4
+Java,Junior,Java,2
+Java,Junior,Spring Boot,1
+Java,Junior,Clean Code,1
+Java,Medior,Java,4
+Java,Medior,Spring Boot,3
+Java,Medior,Hibernate / JPA,2
+Java,Medior,Clean Code,3
+Java,Senior,Java,6
+Java,Senior,Spring Boot,4
+Java,Senior,Hibernate / JPA,4
+Java,Senior,Clean Code,4

@@ -1,0 +1,13 @@
+SkillName,RequiredSkillName,RequiredMinNiveau
+ASP.NET Core,C#,2
+Entity Framework Core,ASP.NET Core,1
+Entity Framework Core,C#,2
+LINQ,C#,2
+Dependency Injection,.NET,1
+Azure,ASP.NET Core,2
+Spring Boot,Java,2
+Hibernate / JPA,Spring Boot,1
+Hibernate / JPA,Java,2
+Java Streams,Java,2
+Spring Security,Spring Boot,2
+AWS,Spring Boot,2

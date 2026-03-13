@@ -1,0 +1,22 @@
+Name,Category,LevelCount,Description
+Clean Code,Architecture & Design,5,Write readable, maintainable, self-documenting code.
+Git,Tooling & DevOps,1,Version control with Git: branching, merging, rebasing.
+Docker,Tooling & DevOps,3,Container-based packaging and runtime for applications.
+Testing Fundamentals,Testing,4,Unit, integration, and end-to-end testing principles.
+CI/CD,Tooling & DevOps,3,Continuous integration and delivery pipelines.
+C#,Language & Runtime,7,"The C# programming language, from fundamentals to advanced CLR features."
+.NET,Language & Runtime,5,".NET runtime, SDK, and ecosystem including NuGet and hosting model."
+ASP.NET Core,Web & API,5,Building REST APIs and web applications with ASP.NET Core.
+Entity Framework Core,Data & Persistence,5,ORM for .NET using EF Core with code-first migrations.
+LINQ,Language & Runtime,4,Language Integrated Query for collections and data sources.
+Dependency Injection,Architecture & Design,3,"IoC and DI patterns; Microsoft.Extensions.DependencyInjection."
+xUnit,Testing,3,Unit testing with xUnit.net for .NET projects.
+Azure,Tooling & DevOps,5,Microsoft Azure cloud platform for hosting and managed services.
+Java,Language & Runtime,7,The Java programming language from fundamentals to advanced JVM topics.
+Spring Boot,Web & API,5,Building REST APIs and services with Spring Boot.
+Hibernate / JPA,Data & Persistence,5,ORM for Java using Hibernate and the JPA specification.
+Maven,Tooling & DevOps,3,Build automation and dependency management with Apache Maven.
+JUnit 5,Testing,3,Unit testing with JUnit 5 for Java projects.
+Java Streams,Language & Runtime,4,Functional-style data processing with the Java Streams API.
+Spring Security,Web & API,4,Authentication and authorisation with Spring Security.
+AWS,Tooling & DevOps,5,Amazon Web Services cloud platform for hosting and managed services.
