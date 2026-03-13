@@ -14,6 +14,14 @@ public static class SkillCatalogueSeedData
     {
         if (await db.SkillCategories.AnyAsync()) return;
 
+        // Wrap in a transaction so a crash mid-seed doesn't leave partial data that
+        // blocks re-seeding on the next restart (the idempotency guard would fire on
+        // the orphaned categories and return early without finishing the rest).
+        // Only open a new transaction when none is already active (e.g. in tests the
+        // DatabaseTestBase wraps each test in its own transaction for rollback).
+        var ownTransaction = db.Database.CurrentTransaction is null;
+        var tx = ownTransaction ? await db.Database.BeginTransactionAsync() : null;
+
         var categories = SeedCategories(db);
         await db.SaveChangesAsync();
 
@@ -31,6 +39,12 @@ public static class SkillCatalogueSeedData
 
         SeedSeniorityThresholds(db, profiles, skills);
         await db.SaveChangesAsync();
+
+        if (tx is not null)
+        {
+            await tx.CommitAsync();
+            await tx.DisposeAsync();
+        }
     }
 
     // ────────────────────────────────────────────────────────

@@ -1,5 +1,6 @@
 using Itenium.SkillForge.Services.SkillCatalogue;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Itenium.SkillForge.WebApi.Controllers;
@@ -21,6 +22,7 @@ public class SkillsController : ControllerBase
     /// Optionally filter by <paramref name="categoryId"/> or <paramref name="profileId"/>.
     /// </summary>
     [HttpGet]
+    [ProducesResponseType<IReadOnlyList<SkillListItem>>(StatusCodes.Status200OK)]
     public async Task<ActionResult<IReadOnlyList<SkillListItem>>> GetSkills(
         [FromQuery] int? categoryId = null,
         [FromQuery] int? profileId = null,
@@ -34,6 +36,8 @@ public class SkillsController : ControllerBase
     /// Returns full detail of a skill including level descriptors and prerequisites.
     /// </summary>
     [HttpGet("{id:int}")]
+    [ProducesResponseType<SkillDetail>(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<SkillDetail>> GetSkill(int id, CancellationToken ct = default)
     {
         var skill = await _catalogue.GetSkillDetailAsync(id, ct);
