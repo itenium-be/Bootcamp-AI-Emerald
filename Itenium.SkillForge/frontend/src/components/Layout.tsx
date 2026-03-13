@@ -44,6 +44,7 @@ import {
   Award,
   Settings,
   Library,
+  Layers,
   TrendingUp,
   BarChart3,
   ClipboardList,
@@ -232,7 +233,10 @@ export function Layout() {
   ];
 
   // Catalog - shown for all users
-  const catalogNavItems = [{ path: '/catalog', icon: Library, label: t('nav.catalog') }];
+  const catalogNavItems = [
+    { path: '/catalog', icon: Library, label: t('nav.catalog') },
+    { path: '/skills', icon: Layers, label: t('nav.skills') },
+  ];
 
   // Team section - shown for managers
   const teamNavItems = [

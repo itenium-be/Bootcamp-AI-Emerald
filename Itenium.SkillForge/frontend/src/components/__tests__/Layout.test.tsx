@@ -79,6 +79,7 @@ vi.mock('lucide-react', () => {
     Award: I,
     Settings: I,
     Library: I,
+    Layers: I,
     TrendingUp: I,
     BarChart3: I,
     ClipboardList: I,
