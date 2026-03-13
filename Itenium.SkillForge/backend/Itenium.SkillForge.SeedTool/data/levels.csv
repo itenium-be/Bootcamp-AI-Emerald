@@ -1,0 +1,89 @@
+SkillName,Niveau,Descriptor
+Clean Code,1,Applies basic naming conventions and avoids magic numbers
+Clean Code,2,Consistently writes short, focused methods and classes
+Clean Code,3,"Proactively refactors duplication; uses meaningful abstractions"
+Clean Code,4,Leads code review with quality focus; coaches team on clean code principles
+Clean Code,5,Defines team standards; contributes to internal clean-code guides
+Docker,1,Runs and inspects existing containers and images
+Docker,2,"Writes Dockerfiles, builds images, and manages volumes and networks"
+Docker,3,Designs multi-stage builds and docker-compose setups for local dev
+Testing Fundamentals,1,Writes basic unit tests for isolated functions
+Testing Fundamentals,2,Uses mocking frameworks and understands test doubles
+Testing Fundamentals,3,Applies TDD; writes integration tests against real dependencies
+Testing Fundamentals,4,Designs test strategy; balances unit/integration/e2e pyramid
+CI/CD,1,Understands pipeline concepts and can read existing configurations
+CI/CD,2,"Configures build and test stages in a pipeline (e.g., GitHub Actions)"
+CI/CD,3,Designs multi-environment deployment pipelines with rollback strategy
+C#,1,Writes simple procedural code using basic types and control flow
+C#,2,"Uses OOP: classes, inheritance, interfaces, and access modifiers"
+C#,3,"Applies generics, delegates, events, and LINQ"
+C#,4,"Writes async/await code; understands Task, ValueTask, and threading basics"
+C#,5,"Uses advanced patterns: expression trees, reflection, and dynamic typing"
+C#,6,"Designs reusable libraries with a minimal, expressive public API"
+C#,7,"Deep CLR knowledge: memory model, GC tuning, and performance profiling"
+.NET,1,Understands the SDK/runtime separation; runs and debugs .NET applications
+.NET,2,"Configures dependency injection, configuration, and the generic host"
+.NET,3,"Manages NuGet packages; uses IOptions, logging abstractions, and middleware"
+.NET,4,"Optimises startup time, manages versioning, and builds NuGet packages"
+.NET,5,Contributes to shared infrastructure libraries; understands runtime internals
+ASP.NET Core,1,Creates minimal APIs or basic MVC controllers returning JSON
+ASP.NET Core,2,"Configures middleware pipeline, routing, and dependency injection"
+ASP.NET Core,3,"Implements authentication/authorization, model validation, and error handling"
+ASP.NET Core,4,Designs versioned APIs with OpenAPI documentation and problem details
+ASP.NET Core,5,"Optimises performance: response caching, output compression, health checks"
+Entity Framework Core,1,Performs basic CRUD operations with a DbContext
+Entity Framework Core,2,"Uses navigation properties, eager loading, and migrations"
+Entity Framework Core,3,Configures relationships and indexes using Fluent API
+Entity Framework Core,4,Writes raw SQL for performance-critical queries; uses projections
+Entity Framework Core,5,Tunes query performance; handles concurrency conflicts and bulk operations
+LINQ,1,"Uses basic operators: Select, Where, First, OrderBy, ToList"
+LINQ,2,"Writes multi-step pipelines with joins, grouping, and aggregations"
+LINQ,3,Understands deferred execution; distinguishes IQueryable from IEnumerable
+LINQ,4,Optimises LINQ-to-SQL translation; avoids N+1 and Cartesian explosion
+Dependency Injection,1,Registers and resolves services; understands constructor injection
+Dependency Injection,2,Chooses correct lifetimes (Singleton, Scoped, Transient) and avoids captive dependencies
+Dependency Injection,3,Designs modular service registration using extension methods and modules
+xUnit,1,Writes Fact and Theory tests; understands test runner and output
+xUnit,2,Uses fixtures and collection fixtures for shared setup; applies custom assertions
+xUnit,3,Designs test projects with shared infrastructure (builders, fakes, test doubles)
+Azure,1,Navigates Azure Portal; deploys a pre-configured web app or function
+Azure,2,"Provisions and connects App Service, SQL Database, and Storage"
+Azure,3,"Manages identity (RBAC, Managed Identity) and configures Key Vault secrets"
+Azure,4,Designs multi-region deployments with load balancing and auto-scaling
+Azure,5,"Architects cost-optimised, secure cloud-native solutions with IaC (Bicep/Terraform)"
+Java,1,"Writes Java programs using basic OOP: classes, interfaces, and collections"
+Java,2,Uses generics, exception handling, and the Collections framework effectively
+Java,3,"Applies Streams, lambdas, Optional, and functional interfaces"
+Java,4,"Understands JVM internals: GC basics, class loading, and memory areas"
+Java,5,"Writes concurrent code with threads, locks, and the Executor framework"
+Java,6,"Uses modern Java features (records, sealed classes, pattern matching, Java 21+)"
+Java,7,"Tunes JVM performance: profiling, heap dump analysis, and GC configuration"
+Spring Boot,1,Creates REST controllers and configures application startup
+Spring Boot,2,Uses Spring beans, profiles, and application properties effectively
+Spring Boot,3,"Implements Spring Security, transaction management, and bean validation"
+Spring Boot,4,Designs modular applications with Spring Data and test slices (@WebMvcTest etc.)
+Spring Boot,5,Builds custom starters; tunes auto-configuration and actuator endpoints
+Hibernate / JPA,1,Performs basic CRUD via EntityManager or Spring Data repositories
+Hibernate / JPA,2,"Maps associations (OneToMany, ManyToMany) and uses JPQL queries"
+Hibernate / JPA,3,"Configures cascade types, fetch strategies, and schema generation"
+Hibernate / JPA,4,Writes native SQL and optimises queries using query hints and projections
+Hibernate / JPA,5,"Tunes second-level cache, batch processing, and handles optimistic locking"
+Maven,1,Understands POM structure; runs build, test, and package goals
+Maven,2,"Manages transitive dependencies, exclusions, and multi-module projects"
+Maven,3,Configures plugins, profiles, and CI-friendly version management
+JUnit 5,1,Writes @Test methods; uses assertions and @BeforeEach/@AfterEach
+JUnit 5,2,Uses @ParameterizedTest, extensions, and Mockito for test doubles
+JUnit 5,3,Designs test infrastructure with custom extensions and Spring test slices
+Java Streams,1,"Uses map, filter, collect, and basic terminal operations"
+Java Streams,2,"Writes complex pipelines with flatMap, groupingBy, and custom collectors"
+Java Streams,3,Understands lazy evaluation and stream lifecycle; avoids common pitfalls
+Java Streams,4,Applies parallel streams appropriately; measures and justifies performance gains
+Spring Security,1,"Configures basic HTTP security: form login, HTTP Basic, and permit rules"
+Spring Security,2,Implements JWT or OAuth2 resource server; customises UserDetailsService
+Spring Security,3,Secures method-level access with @PreAuthorize; writes security integration tests
+Spring Security,4,Designs multi-tenant security; customises filter chains and authentication providers
+AWS,1,Navigates AWS Console; deploys a pre-configured EC2 or Lambda function
+AWS,2,"Provisions and connects Elastic Beanstalk, RDS, and S3"
+AWS,3,Manages IAM roles and policies; uses Secrets Manager and Parameter Store
+AWS,4,"Designs multi-AZ deployments with ELB, Auto Scaling, and CloudWatch"
+AWS,5,"Architects cost-optimised, secure cloud-native solutions with IaC (CDK/Terraform)"
