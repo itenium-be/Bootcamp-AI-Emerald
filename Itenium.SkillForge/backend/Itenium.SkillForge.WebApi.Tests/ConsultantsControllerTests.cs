@@ -15,7 +15,7 @@ public class ConsultantsControllerTests : DatabaseTestBase
     public async Task SetUp()
     {
         await SkillCatalogueSeedData.Seed(Db);
-        _sut = new ConsultantsController(new ProfileService(Db));
+        _sut = new ConsultantsController(new ProfileService(Db), new RoadmapService(Db), Db);
     }
 
     [Test]

@@ -21,6 +21,7 @@
     "progress": "Progress",
     "certificates": "Certificates",
     "myLearning": "My Learning",
+    "roadmap": "My Roadmap",
     "myCourses": "My Courses",
     "myProgress": "My Progress",
     "myCertificates": "My Certificates",
@@ -123,6 +124,24 @@
     "backToSkills": "Back to Skills",
     "notFound": "Skill not found",
     "notFoundHint": "This skill does not exist or has been removed"
+  },
+  "roadmap": {
+    "title": "My Roadmap",
+    "subtitle": "Your personalized skill development path",
+    "showAll": "Show all skills",
+    "showLess": "Show fewer skills",
+    "noProfile": "No profile assigned",
+    "noProfileHint": "Contact your manager to assign a competence profile",
+    "noSkills": "No skills found for this profile",
+    "targetLevel": "Target {{niveau}}",
+    "validated": "Validated",
+    "prereqWarning": "Requires {{skill}} ≥ level {{required}} (currently {{current}})",
+    "seniority": {
+      "targeting": "Targeting",
+      "achieved": "You are",
+      "criteria": "criteria met",
+      "unmetTitle": "Requirements to advance"
+    }
   },
   "errors": {
     "sessionExpired": "Session expired!",

@@ -227,8 +227,9 @@ export function Layout() {
 
   // My Learning section - shown for learners and managers
   const myLearningNavItems = [
+    { path: '/roadmap', icon: TrendingUp, label: t('nav.roadmap') },
     { path: '/my-courses', icon: BookOpen, label: t('nav.myCourses') },
-    { path: '/my-progress', icon: TrendingUp, label: t('nav.myProgress') },
+    { path: '/my-progress', icon: BarChart3, label: t('nav.myProgress') },
     { path: '/my-certificates', icon: Award, label: t('nav.myCertificates') },
   ];
 

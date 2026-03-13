@@ -111,3 +111,60 @@ export async function fetchSkillDetail(id: number): Promise<SkillDetail> {
   const response = await api.get<SkillDetail>(`/api/skills/${id}`);
   return response.data;
 }
+
+export interface SkillPrerequisiteWarning {
+  requiredSkillId: number;
+  requiredSkillName: string;
+  requiredMinNiveau: number;
+  currentNiveau: number;
+}
+
+export interface RoadmapSkillNode {
+  skillId: number;
+  skillName: string;
+  categoryName: string;
+  levelCount: number;
+  currentNiveau: number;
+  targetNiveau: number | null;
+  prerequisitesMet: boolean;
+  unmetPrerequisites: SkillPrerequisiteWarning[];
+}
+
+export interface SeniorityProgressCriterion {
+  skillId: number;
+  skillName: string;
+  minNiveau: number;
+  currentNiveau: number;
+}
+
+export type SeniorityLevel = 'Junior' | 'Medior' | 'Senior';
+
+export interface SeniorityProgressResult {
+  currentLevel: SeniorityLevel | null;
+  nextLevel: SeniorityLevel | null;
+  met: number;
+  required: number;
+  unmetCriteria: SeniorityProgressCriterion[];
+}
+
+export async function fetchRoadmap(full?: boolean): Promise<RoadmapSkillNode[] | null> {
+  try {
+    const response = await api.get<RoadmapSkillNode[]>('/api/consultants/me/roadmap', {
+      params: full ? { full: true } : undefined,
+    });
+    return response.data;
+  } catch (err: unknown) {
+    if ((err as { response?: { status?: number } })?.response?.status === 404) return null;
+    throw err;
+  }
+}
+
+export async function fetchSeniorityProgress(): Promise<SeniorityProgressResult | null> {
+  try {
+    const response = await api.get<SeniorityProgressResult>('/api/consultants/me/seniority-progress');
+    return response.data;
+  } catch (err: unknown) {
+    if ((err as { response?: { status?: number } })?.response?.status === 404) return null;
+    throw err;
+  }
+}

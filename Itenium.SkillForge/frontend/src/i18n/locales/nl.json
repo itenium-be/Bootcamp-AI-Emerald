@@ -21,6 +21,7 @@
     "progress": "Voortgang",
     "certificates": "Certificaten",
     "myLearning": "Mijn Leertraject",
+    "roadmap": "Mijn Roadmap",
     "myCourses": "Mijn Cursussen",
     "myProgress": "Mijn Voortgang",
     "myCertificates": "Mijn Certificaten",
@@ -123,6 +124,24 @@
     "backToSkills": "Terug naar vaardigheden",
     "notFound": "Vaardigheid niet gevonden",
     "notFoundHint": "Deze vaardigheid bestaat niet of is verwijderd"
+  },
+  "roadmap": {
+    "title": "Mijn Roadmap",
+    "subtitle": "Uw persoonlijk ontwikkeltraject voor vaardigheden",
+    "showAll": "Alle vaardigheden tonen",
+    "showLess": "Minder tonen",
+    "noProfile": "Geen profiel toegewezen",
+    "noProfileHint": "Neem contact op met uw manager om een competentieprofiel toe te wijzen",
+    "noSkills": "Geen vaardigheden gevonden voor dit profiel",
+    "targetLevel": "Doel {{niveau}}",
+    "validated": "Gevalideerd",
+    "prereqWarning": "Vereist {{skill}} ≥ niveau {{required}} (huidig {{current}})",
+    "seniority": {
+      "targeting": "Doel",
+      "achieved": "U bent",
+      "criteria": "criteria behaald",
+      "unmetTitle": "Vereisten voor bevordering"
+    }
   },
   "errors": {
     "sessionExpired": "Sessie verlopen!",
