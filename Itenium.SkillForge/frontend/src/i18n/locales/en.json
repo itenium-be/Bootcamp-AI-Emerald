@@ -170,6 +170,16 @@
       "backoffice": "Backoffice"
     }
   },
+  "members": {
+    "title": "Team Members",
+    "subtitle": "View and manage your team's consultants",
+    "searchPlaceholder": "Search by name or email...",
+    "name": "Name",
+    "email": "Email",
+    "profile": "Profile",
+    "noProfile": "No profile",
+    "noMembers": "No team members found"
+  },
   "errors": {
     "sessionExpired": "Session expired!",
     "internalServerError": "Internal Server Error!"

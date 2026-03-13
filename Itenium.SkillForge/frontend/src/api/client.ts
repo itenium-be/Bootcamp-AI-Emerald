@@ -210,3 +210,17 @@ export async function archiveUser(id: string): Promise<void> {
 export async function restoreUser(id: string): Promise<void> {
   await api.post(`/api/user/${id}/restore`);
 }
+
+export interface TeamMemberResponse {
+  id: number;
+  firstName: string | null;
+  lastName: string | null;
+  email: string;
+  teamId: number;
+  profileName: string | null;
+}
+
+export async function fetchTeamMembers(): Promise<TeamMemberResponse[]> {
+  const response = await api.get<TeamMemberResponse[]>('/api/consultants');
+  return response.data;
+}
