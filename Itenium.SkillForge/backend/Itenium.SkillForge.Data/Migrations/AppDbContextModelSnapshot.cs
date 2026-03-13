@@ -122,6 +122,8 @@ namespace Itenium.SkillForge.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CoachUserId", "ConsultantUserId");
+
                     b.ToTable("CoachingSessions");
                 });
 
@@ -182,6 +184,10 @@ namespace Itenium.SkillForge.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CoachUserId");
+
+                    b.HasIndex("ConsultantUserId");
+
                     b.HasIndex("SessionId");
 
                     b.HasIndex("SkillId");
@@ -199,9 +205,6 @@ namespace Itenium.SkillForge.Data.Migrations
 
                     b.Property<DateTime?>("ArchivedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
 
                     b.Property<int?>("ProfileId")
                         .HasColumnType("integer");
@@ -291,6 +294,10 @@ namespace Itenium.SkillForge.Data.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CoachUserId");
+
+                    b.HasIndex("ConsultantUserId");
 
                     b.HasIndex("SkillId");
 

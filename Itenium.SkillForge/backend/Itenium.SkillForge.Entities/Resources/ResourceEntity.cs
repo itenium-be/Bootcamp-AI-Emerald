@@ -30,7 +30,7 @@ public class ResourceEntity
 
     /// <summary>FK to the identity user who contributed this resource.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string AddedByUserId { get; set; }
 
     public DateTime AddedAt { get; set; } = DateTime.UtcNow;

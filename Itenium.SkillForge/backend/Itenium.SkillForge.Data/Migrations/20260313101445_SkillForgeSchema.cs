@@ -63,7 +63,6 @@ namespace Itenium.SkillForge.Data.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(type: "character varying(450)", maxLength: 450, nullable: false),
                     ProfileId = table.Column<int>(type: "integer", nullable: true),
-                    IsArchived = table.Column<bool>(type: "boolean", nullable: false),
                     ArchivedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
@@ -369,6 +368,11 @@ namespace Itenium.SkillForge.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_CoachingSessions_CoachUserId_ConsultantUserId",
+                table: "CoachingSessions",
+                columns: new[] { "CoachUserId", "ConsultantUserId" });
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Consultants_ProfileId",
                 table: "Consultants",
                 column: "ProfileId");
@@ -383,6 +387,16 @@ namespace Itenium.SkillForge.Data.Migrations
                 name: "IX_GoalResources_ResourceId",
                 table: "GoalResources",
                 column: "ResourceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Goals_CoachUserId",
+                table: "Goals",
+                column: "CoachUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Goals_ConsultantUserId",
+                table: "Goals",
+                column: "ConsultantUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Goals_SkillId",
@@ -439,6 +453,16 @@ namespace Itenium.SkillForge.Data.Migrations
                 name: "IX_Skills_CategoryId",
                 table: "Skills",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SkillValidations_CoachUserId",
+                table: "SkillValidations",
+                column: "CoachUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SkillValidations_ConsultantUserId",
+                table: "SkillValidations",
+                column: "ConsultantUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SkillValidations_SessionId",

@@ -17,7 +17,7 @@ public class ResourceCompletionEntity
 
     /// <summary>FK to the identity user who completed this resource.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string UserId { get; set; }
 
     /// <summary>Optional link to a goal, recording this completion as evidence.</summary>

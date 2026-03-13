@@ -13,14 +13,15 @@ public class ConsultantEntity
     public int Id { get; set; }
 
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string UserId { get; set; }
 
     public int? ProfileId { get; set; }
 
     public CompetenceCentreProfileEntity? Profile { get; set; }
 
-    public bool IsArchived { get; set; }
+    /// <summary>Derived from ArchivedAt — no separate storage needed.</summary>
+    public bool IsArchived => ArchivedAt.HasValue;
 
     public DateTime? ArchivedAt { get; set; }
 }

@@ -14,7 +14,7 @@ public class ResourceRatingEntity
 
     /// <summary>FK to the identity user who rated this resource.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string UserId { get; set; }
 
     public bool IsPositive { get; set; }

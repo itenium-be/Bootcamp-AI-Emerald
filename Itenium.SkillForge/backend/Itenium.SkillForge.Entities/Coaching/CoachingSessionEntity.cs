@@ -9,12 +9,12 @@ public class CoachingSessionEntity
 
     /// <summary>FK to the identity user who is the consultant in this session.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string ConsultantUserId { get; set; }
 
     /// <summary>FK to the identity user who is the coach running this session.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string CoachUserId { get; set; }
 
     public DateTime StartedAt { get; set; } = DateTime.UtcNow;

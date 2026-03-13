@@ -5,7 +5,7 @@ namespace Itenium.SkillForge.Entities.Coaching;
 
 /// <summary>
 /// An immutable record of a coach validating a skill niveau for a consultant.
-/// CoachUserId and ValidatedAt must never be updated after creation — enforced at the API layer.
+/// CoachUserId and ValidatedAt use init-only accessors to prevent mutation after creation.
 /// </summary>
 public class SkillValidationEntity
 {
@@ -14,13 +14,13 @@ public class SkillValidationEntity
 
     /// <summary>FK to the identity user who is the consultant.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string ConsultantUserId { get; set; }
 
     /// <summary>FK to the identity user who performed the validation. Immutable after creation.</summary>
     [Required]
-    [MaxLength(450)]
-    public required string CoachUserId { get; set; }
+    [MaxLength(EntityConstants.UserIdMaxLength)]
+    public required string CoachUserId { get; init; }
 
     public int SkillId { get; set; }
 
@@ -29,7 +29,7 @@ public class SkillValidationEntity
     public int Niveau { get; set; }
 
     /// <summary>Server-set timestamp. Immutable after creation.</summary>
-    public DateTime ValidatedAt { get; set; } = DateTime.UtcNow;
+    public DateTime ValidatedAt { get; init; } = DateTime.UtcNow;
 
     /// <summary>Optional link to the coaching session in which this validation occurred.</summary>
     public int? SessionId { get; set; }

@@ -132,7 +132,6 @@ public class SkillCatalogueSchemaTests : DatabaseTestBase
         Db.Consultants.Add(consultant);
         await Db.SaveChangesAsync();
 
-        consultant.IsArchived = true;
         consultant.ArchivedAt = DateTime.UtcNow;
         await Db.SaveChangesAsync();
 
@@ -141,5 +140,19 @@ public class SkillCatalogueSchemaTests : DatabaseTestBase
         Assert.That(saved, Is.Not.Null);
         Assert.That(saved!.IsArchived, Is.True);
         Assert.That(saved.ArchivedAt, Is.Not.Null);
+    }
+
+    [Test]
+    public async Task Consultant_UserId_IsUnique()
+    {
+        Db.Consultants.Add(new ConsultantEntity { UserId = "user-duplicate" });
+        await Db.SaveChangesAsync();
+
+        Db.Consultants.Add(new ConsultantEntity { UserId = "user-duplicate" });
+
+        Assert.That(
+            async () => await Db.SaveChangesAsync(),
+            Throws.Exception,
+            "Inserting a second ConsultantEntity with the same UserId should violate the unique index");
     }
 }

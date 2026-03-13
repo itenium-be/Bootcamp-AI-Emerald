@@ -12,12 +12,12 @@ public class GoalEntity
 
     /// <summary>FK to the identity user who is the consultant.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string ConsultantUserId { get; set; }
 
     /// <summary>FK to the identity user who is the coach that set this goal.</summary>
     [Required]
-    [MaxLength(450)]
+    [MaxLength(EntityConstants.UserIdMaxLength)]
     public required string CoachUserId { get; set; }
 
     public int SkillId { get; set; }
