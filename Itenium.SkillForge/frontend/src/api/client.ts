@@ -111,3 +111,45 @@ export async function fetchSkillDetail(id: number): Promise<SkillDetail> {
   const response = await api.get<SkillDetail>(`/api/skills/${id}`);
   return response.data;
 }
+
+export interface UserResponse {
+  id: string;
+  email: string;
+  firstName: string | null;
+  lastName: string | null;
+  role: string;
+  teams: number[];
+  isArchived: boolean;
+}
+
+export interface CreateUserRequest {
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: string;
+  password: string;
+  teams: number[] | null;
+}
+
+export async function fetchUsers(includeArchived = false): Promise<UserResponse[]> {
+  const response = await api.get<UserResponse[]>('/api/user', { params: { includeArchived } });
+  return response.data;
+}
+
+export async function fetchUnassignedUsers(): Promise<UserResponse[]> {
+  const response = await api.get<UserResponse[]>('/api/user/unassigned');
+  return response.data;
+}
+
+export async function createUser(request: CreateUserRequest): Promise<UserResponse> {
+  const response = await api.post<UserResponse>('/api/user', request);
+  return response.data;
+}
+
+export async function archiveUser(id: string): Promise<void> {
+  await api.post(`/api/user/${id}/archive`);
+}
+
+export async function restoreUser(id: string): Promise<void> {
+  await api.post(`/api/user/${id}/restore`);
+}
