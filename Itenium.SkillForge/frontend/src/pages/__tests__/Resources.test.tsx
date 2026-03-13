@@ -231,7 +231,7 @@ describe('Resources', () => {
     render(<Resources />);
     fireEvent.click(screen.getAllByText('resources.addResource')[0]);
     // fireEvent.click on submit button doesn't propagate as form submit in jsdom — use fireEvent.submit
-    const form = document.querySelector('form')!;
+    const form = document.querySelector('form') as HTMLFormElement;
     fireEvent.submit(form);
     expect(screen.getByText('resources.requiredFields')).toBeInTheDocument();
   });
@@ -251,7 +251,7 @@ describe('Resources', () => {
     // In modal: index 2 = type select, index 3 = skill select (0 and 1 are page filters)
     fireEvent.change(modalSelects[3], { target: { value: '10' } });
 
-    const form = document.querySelector('form')!;
+    const form = document.querySelector('form') as HTMLFormElement;
     fireEvent.submit(form);
     expect(createMutate).toHaveBeenCalledWith({
       title: 'My Resource',
