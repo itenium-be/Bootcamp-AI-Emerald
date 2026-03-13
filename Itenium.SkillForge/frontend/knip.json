@@ -1,4 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": ["src/routes/**/*.tsx"],
   "ignoreDependencies": ["@vitest/coverage-v8"]
 }
