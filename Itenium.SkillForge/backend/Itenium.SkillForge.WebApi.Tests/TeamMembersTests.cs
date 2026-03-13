@@ -2,6 +2,7 @@ using Itenium.SkillForge.Data;
 using Itenium.SkillForge.Entities.Consultants;
 using Itenium.SkillForge.WebApi.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Itenium.SkillForge.WebApi.Tests;
 
