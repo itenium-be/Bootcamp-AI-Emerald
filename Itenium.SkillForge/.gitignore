@@ -31,3 +31,4 @@ skillforge.db-*
 e2e/.test-state.json
 test-results/
 playwright-report/
+coverage/

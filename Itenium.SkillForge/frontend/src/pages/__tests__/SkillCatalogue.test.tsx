@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { vi, type Mock } from 'vitest';
 import { useQuery } from '@tanstack/react-query';
 import { SkillCatalogue } from '../SkillCatalogue';
+import { fetchSkills } from '@/api/client';
 import type { SkillListItem } from '@/api/client';
 
 vi.mock('react-i18next', () => ({
@@ -162,5 +163,74 @@ describe('SkillCatalogue', () => {
     mockUseQuery.mockReturnValue({ data: [mockSkills[2]], isLoading: false });
     render(<SkillCatalogue />);
     expect(screen.getByText('skills.checkboxSkill')).toBeInTheDocument();
+  });
+
+  it('calls fetchSkills as the query function', () => {
+    mockUseQuery.mockReturnValue({ data: [], isLoading: false });
+    render(<SkillCatalogue />);
+    const options = mockUseQuery.mock.calls[0][0] as { queryFn: () => unknown };
+    options.queryFn();
+    expect(fetchSkills).toHaveBeenCalled();
+  });
+
+  it('filters by description when name does not match', async () => {
+    mockUseQuery.mockReturnValue({ data: mockSkills, isLoading: false });
+    render(<SkillCatalogue />);
+
+    fireEvent.change(screen.getByPlaceholderText('skills.searchPlaceholder'), {
+      target: { value: 'version control' },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('Git')).toBeInTheDocument();
+      expect(screen.queryByText('C#')).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders skills with null description without crashing', () => {
+    const skillWithoutDesc: SkillListItem = {
+      id: 5,
+      name: 'Rust',
+      categoryName: 'Language & Runtime',
+      levelCount: 3,
+      description: null,
+    };
+    mockUseQuery.mockReturnValue({ data: [skillWithoutDesc], isLoading: false });
+    render(<SkillCatalogue />);
+    expect(screen.getByText('Rust')).toBeInTheDocument();
+  });
+
+  it('filters correctly when description is null and search does not match name', async () => {
+    const skillWithoutDesc: SkillListItem = {
+      id: 5,
+      name: 'Rust',
+      categoryName: 'Language & Runtime',
+      levelCount: 3,
+      description: null,
+    };
+    mockUseQuery.mockReturnValue({ data: [skillWithoutDesc], isLoading: false });
+    render(<SkillCatalogue />);
+
+    fireEvent.change(screen.getByPlaceholderText('skills.searchPlaceholder'), {
+      target: { value: 'python' },
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText('Rust')).not.toBeInTheDocument();
+    });
+  });
+
+  it('renders skill with unknown category using fallback color', () => {
+    const unknownCatSkill: SkillListItem = {
+      id: 6,
+      name: 'Cobol',
+      categoryName: 'Legacy',
+      levelCount: 2,
+      description: null,
+    };
+    mockUseQuery.mockReturnValue({ data: [unknownCatSkill], isLoading: false });
+    render(<SkillCatalogue />);
+    // skill name renders, confirming categoryColor fallback did not throw
+    expect(screen.getByText('Cobol')).toBeInTheDocument();
   });
 });

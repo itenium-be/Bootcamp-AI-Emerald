@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { vi, type Mock } from 'vitest';
 import { useQuery } from '@tanstack/react-query';
 import { SkillDetail } from '../SkillDetail';
+import { fetchSkillDetail } from '@/api/client';
 import type { SkillDetail as SkillDetailType } from '@/api/client';
 
 vi.mock('react-i18next', () => ({
@@ -146,5 +147,42 @@ describe('SkillDetail', () => {
     mockUseQuery.mockReturnValue({ data: noPrereqs, isLoading: false });
     render(<SkillDetail />);
     expect(screen.queryByText('skills.prerequisites')).not.toBeInTheDocument();
+  });
+
+  it('calls fetchSkillDetail as the query function', () => {
+    mockUseQuery.mockReturnValue({ data: mockSkill, isLoading: false });
+    render(<SkillDetail />);
+    const options = mockUseQuery.mock.calls[0][0] as { queryFn: () => unknown };
+    options.queryFn();
+    expect(fetchSkillDetail).toHaveBeenCalledWith(1);
+  });
+
+  it('does not render description paragraph when description is null', () => {
+    const noDesc: SkillDetailType = { ...mockSkill, description: null };
+    mockUseQuery.mockReturnValue({ data: noDesc, isLoading: false });
+    render(<SkillDetail />);
+    expect(screen.queryByText('The C# programming language.')).not.toBeInTheDocument();
+  });
+
+  it('does not show checkbox badge for progression skills', () => {
+    mockUseQuery.mockReturnValue({ data: mockSkill, isLoading: false });
+    render(<SkillDetail />);
+    expect(screen.queryByText('skills.checkboxSkill')).not.toBeInTheDocument();
+    expect(screen.queryByText('skills.checkboxSkillHint')).not.toBeInTheDocument();
+  });
+
+  it('renders skill with unknown category using fallback color', () => {
+    const unknownCatSkill: SkillDetailType = { ...mockSkill, categoryName: 'Legacy' };
+    mockUseQuery.mockReturnValue({ data: unknownCatSkill, isLoading: false });
+    render(<SkillDetail />);
+    // skill heading renders, confirming categoryColor fallback did not throw
+    expect(screen.getByRole('heading', { name: 'C#' })).toBeInTheDocument();
+  });
+
+  it('shows back to skills link on not-found page', () => {
+    mockUseQuery.mockReturnValue({ data: null, isLoading: false });
+    render(<SkillDetail />);
+    const backLink = screen.getByRole('link', { name: /skills.backToSkills/i });
+    expect(backLink).toHaveAttribute('href', '/skills');
   });
 });
