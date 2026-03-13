@@ -19,7 +19,7 @@ vi.mock('@tanstack/react-query', () => ({
 vi.mock('@/api/client', () => ({
   fetchConsultantProfile: vi.fn(),
   createValidation: vi.fn(),
-  createGoal: vi.fn(),
+  createCoachGoal: vi.fn(),
   endSession: vi.fn(),
 }));
 

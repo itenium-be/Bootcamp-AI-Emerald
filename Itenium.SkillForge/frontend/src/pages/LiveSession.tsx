@@ -7,12 +7,12 @@ import { Button, Input, Label, Select, SelectTrigger, SelectContent, SelectItem,
 import {
   fetchConsultantProfile,
   createValidation,
-  createGoal,
+  createCoachGoal,
   endSession,
   type ConsultantSkill,
   type ConsultantGoal,
   type CreateValidationRequest,
-  type CreateGoalRequest,
+  type CreateCoachGoalRequest,
 } from '@/api/client';
 
 function ValidationCard({
@@ -164,7 +164,7 @@ export function LiveSession() {
   });
 
   const { mutate: addGoal } = useMutation({
-    mutationFn: (req: CreateGoalRequest) => createGoal(consultantId, req),
+    mutationFn: (req: CreateCoachGoalRequest) => createCoachGoal(consultantId, req),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['coach', 'consultant', consultantId] });
       setShowGoalForm(false);
