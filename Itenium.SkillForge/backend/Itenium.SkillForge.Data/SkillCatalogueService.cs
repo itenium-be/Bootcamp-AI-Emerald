@@ -21,9 +21,7 @@ internal sealed class SkillCatalogueService : ISkillCatalogueService
         int? profileId = null,
         CancellationToken ct = default)
     {
-        var query = _db.Skills
-            .Include(s => s.Category)
-            .AsQueryable();
+        var query = _db.Skills.AsQueryable();
 
         if (categoryId.HasValue)
             query = query.Where(s => s.CategoryId == categoryId.Value);
