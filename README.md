@@ -30,6 +30,50 @@ docker compose up -d --build
 
 
 
+Development Kickoff
+-------------------
+
+### Before everyone can start — the baseline
+
+Three issues must land on `master` before any other work branches off.
+All 5 devs should review #1 before it merges — it is the only PR where everyone must have input,
+because changing the entity model later is painful across 4 parallel branches.
+
+| Order | Issue | Why it blocks everyone |
+|-------|-------|------------------------|
+| 1st | [#1 DB schema & EF Core migrations](https://github.com/itenium-be/Bootcamp-AI-Emerald/issues/1) | Defines the shared entity model — all epics code against it |
+| 2nd | [#2 Auth role mapping](https://github.com/itenium-be/Bootcamp-AI-Emerald/issues/2) + [#32 Team-scoped repo enforcement](https://github.com/itenium-be/Bootcamp-AI-Emerald/issues/32) | Every controller and endpoint needs role + team scoping in place |
+| 3rd | [#6 Seed data](https://github.com/itenium-be/Bootcamp-AI-Emerald/issues/6) | Without seed data, every dev gets a blank screen on first run |
+
+**Suggested Day 1 sequence:**
+
+```
+Morning:   all 5 devs review and agree on schema (#1) → merge
+Afternoon: #2 + #32 implemented and merged (one dev, ~half day each)
+Evening:   #6 seed data merged
+
+Day 2:     everyone branches off their own epic
+```
+
+Before Day 2, agree as a team on:
+- **API conventions** — response envelope shape, error format, pagination style
+- **Branch strategy** — one branch per issue (`feature/issue-42-...`), PR back to `master`, no long-lived epic branches
+
+### Epics & issue overview
+
+| Epic | Owner | Issues | Total SP |
+|------|-------|--------|----------|
+| [E1 Foundation & Infrastructure](https://github.com/itenium-be/Bootcamp-AI-Emerald/milestone/1) | Dev 1 | #1 #2 #3 #4 #5 #6 #32 | 39 |
+| [E2 Skill Catalogue](https://github.com/itenium-be/Bootcamp-AI-Emerald/milestone/2) | Dev 2 | #7 #8 #9 #10 #11 #12 | 27 |
+| [E3 Roadmap & Seniority](https://github.com/itenium-be/Bootcamp-AI-Emerald/milestone/3) | Dev 3 | #13 #14 #15 #16 #17 | 24 |
+| [E4 Goals, Resources & Readiness](https://github.com/itenium-be/Bootcamp-AI-Emerald/milestone/4) | Dev 4 | #18 #19 #20 #21 #22 #23 #30 | 28 |
+| [E5 Coach Dashboard & Live Session](https://github.com/itenium-be/Bootcamp-AI-Emerald/milestone/5) | Dev 5 | #24 #25 #26 #27 #28 #29 #31 | 33 |
+
+**Total: 32 issues — 151 story points**
+
+Epics 2–5 can run in parallel from Day 2. E3/E4 frontend work can start immediately using stub/mock data while waiting for backend APIs.
+
+
 Backlog
 -------
 
