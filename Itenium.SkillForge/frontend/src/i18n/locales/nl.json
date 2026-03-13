@@ -242,6 +242,53 @@
     "noProfile": "Geen profiel",
     "noMembers": "Geen teamleden gevonden"
   },
+  "coach": {
+    "dashboard": "Team Dashboard",
+    "dashboardSubtitle": "Overzicht van de gereedheid en activiteit van uw team",
+    "name": "Naam",
+    "activeGoals": "Actieve doelen",
+    "readinessFlags": "Gereedheidsmarkeringen",
+    "lastActivity": "Laatste activiteit",
+    "inactive": "Inactief",
+    "inactiveDays": "{{days}} dagen",
+    "noConsultants": "Geen consultants gevonden",
+    "inactiveHighlight": "Inactief >21 dagen",
+    "flagAge": "{{days}}d"
+  },
+  "consultant": {
+    "profile": "Consultantprofiel",
+    "skills": "Vaardigheden",
+    "activeGoals": "Actieve doelen",
+    "recentActivity": "Recente activiteit",
+    "noSkills": "Geen vaardigheden geregistreerd",
+    "noGoals": "Geen actieve doelen",
+    "noActivity": "Geen recente activiteit",
+    "startSession": "Sessie starten",
+    "dueDate": "Deadline {{date}}"
+  },
+  "session": {
+    "title": "Live sessie",
+    "subtitle": "Sessie met {{name}}",
+    "pendingValidations": "Openstaande validaties",
+    "activeGoals": "Actieve doelen",
+    "validateSkill": "Vaardigheid valideren",
+    "currentLevel": "Huidig: Niveau {{niveau}}",
+    "newLevel": "Nieuw niveau",
+    "note": "Opmerking (optioneel)",
+    "notePlaceholder": "Voeg een opmerking toe over deze validatie...",
+    "validate": "Valideren",
+    "addGoal": "SMART-doel toevoegen",
+    "goalTitle": "Doeltitel",
+    "goalDescription": "Beschrijving",
+    "goalDueDate": "Deadline",
+    "goalSkill": "Gerelateerde vaardigheid (optioneel)",
+    "createGoal": "Doel aanmaken",
+    "endSession": "Sessie beëindigen",
+    "sessionNotes": "Sessienotities",
+    "sessionNotesPlaceholder": "Vat samen wat er besproken is...",
+    "noSkills": "Geen vaardigheden om te valideren",
+    "cancel": "Annuleren"
+  },
   "errors": {
     "sessionExpired": "Sessie verlopen!",
     "internalServerError": "Interne serverfout!"

@@ -360,3 +360,105 @@ export async function fetchTeamMembers(): Promise<TeamMemberResponse[]> {
   const response = await api.get<TeamMemberResponse[]>('/api/consultants');
   return response.data;
 }
+
+// ── Coach API ─────────────────────────────────────────────────────────────────
+
+export interface ReadinessFlag {
+  skillName: string;
+  raisedAt: string;
+  ageInDays: number;
+}
+
+export interface ConsultantSummary {
+  id: string;
+  name: string;
+  email: string;
+  activeGoalCount: number;
+  readinessFlags: ReadinessFlag[];
+  lastActivityDate: string | null;
+  daysSinceActivity: number | null;
+}
+
+export interface ConsultantSkill {
+  skillId: number;
+  skillName: string;
+  categoryName: string;
+  levelCount: number;
+  currentNiveau: number;
+}
+
+export interface ConsultantGoal {
+  id: number;
+  title: string;
+  description: string | null;
+  dueDate: string | null;
+  skillId: number | null;
+  skillName: string | null;
+}
+
+export interface ConsultantProfile {
+  id: string;
+  name: string;
+  email: string;
+  skills: ConsultantSkill[];
+  activeGoals: ConsultantGoal[];
+}
+
+export type ActivityType = 'validation' | 'resource' | 'flag' | 'session' | 'goal';
+
+export interface ActivityFeedItem {
+  id: number;
+  type: ActivityType;
+  description: string;
+  occurredAt: string;
+}
+
+export interface StartSessionResponse {
+  sessionId: string;
+}
+
+export interface CreateValidationRequest {
+  skillId: number;
+  newNiveau: number;
+  note?: string;
+}
+
+export interface CreateCoachGoalRequest {
+  title: string;
+  description: string | null;
+  dueDate: string | null;
+  skillId: number | null;
+}
+
+export async function fetchTeamDashboard(): Promise<ConsultantSummary[]> {
+  const response = await api.get<ConsultantSummary[]>('/api/coach/team');
+  return response.data;
+}
+
+export async function fetchConsultantProfile(consultantId: string): Promise<ConsultantProfile> {
+  const response = await api.get<ConsultantProfile>(`/api/coach/consultants/${consultantId}`);
+  return response.data;
+}
+
+export async function fetchConsultantActivity(consultantId: string): Promise<ActivityFeedItem[]> {
+  const response = await api.get<ActivityFeedItem[]>(`/api/coach/consultants/${consultantId}/activity`);
+  return response.data;
+}
+
+export async function startSession(consultantId: string): Promise<StartSessionResponse> {
+  const response = await api.post<StartSessionResponse>(`/api/coach/consultants/${consultantId}/sessions`);
+  return response.data;
+}
+
+export async function endSession(sessionId: string, notes: string): Promise<void> {
+  await api.post(`/api/coach/sessions/${sessionId}/end`, { notes });
+}
+
+export async function createValidation(consultantId: string, request: CreateValidationRequest): Promise<void> {
+  await api.post(`/api/coach/consultants/${consultantId}/validations`, request);
+}
+
+export async function createCoachGoal(consultantId: string, request: CreateCoachGoalRequest): Promise<ConsultantGoal> {
+  const response = await api.post<ConsultantGoal>(`/api/coach/consultants/${consultantId}/goals`, request);
+  return response.data;
+}
