@@ -174,10 +174,35 @@ public static class SeedData
         var javier = await CreateUserIfAbsent(userManager, "javier@test.local", "javier", "Javier", "Garcia", "learner", teamId: 1);
         var kim = await CreateUserIfAbsent(userManager, "kim@test.local", "kim", "Kim", "Wouters", "learner", teamId: 4);
 
-        if (nathalie is null || javaCoach is null || lea is null || sander is null || thomas is null)
+        // Resolve existing users by email for idempotent data patching
+        var leaUser = lea ?? await userManager.FindByEmailAsync("lea@test.local");
+        var sanderUser = sander ?? await userManager.FindByEmailAsync("sander@test.local");
+        var thomasUser = thomas ?? await userManager.FindByEmailAsync("thomas@test.local");
+        var anaUser = ana ?? await userManager.FindByEmailAsync("ana@test.local");
+        var javierUser = javier ?? await userManager.FindByEmailAsync("javier@test.local");
+        var kimUser = kim ?? await userManager.FindByEmailAsync("kim@test.local");
+        var nathalieUser = nathalie ?? await userManager.FindByEmailAsync("nathalie@test.local");
+        var javaCoachUser = javaCoach ?? await userManager.FindByEmailAsync("javacoach@test.local");
+
+        if (nathalieUser is null || javaCoachUser is null || leaUser is null || sanderUser is null || thomasUser is null)
             return;
 
-        await SeedDemoData(db, nathalie, javaCoach, lea, sander, thomas);
+        await SeedDemoData(db, nathalieUser, javaCoachUser, leaUser, sanderUser, thomasUser, anaUser, javierUser, kimUser);
+    }
+
+    private static async Task<ConsultantEntity> UpsertConsultant(AppDbContext db, string userId, int teamId, int? profileId)
+    {
+        var existing = await db.Consultants.IgnoreQueryFilters().FirstOrDefaultAsync(c => c.UserId == userId);
+        if (existing is not null)
+        {
+            if (existing.TeamId == 0) existing.TeamId = teamId;
+            if (existing.ProfileId is null && profileId is not null) existing.ProfileId = profileId;
+            return existing;
+        }
+
+        var consultant = new ConsultantEntity { UserId = userId, TeamId = teamId, ProfileId = profileId };
+        db.Consultants.Add(consultant);
+        return consultant;
     }
 
     private static async Task<ForgeUser?> CreateUserIfAbsent(
@@ -217,19 +242,25 @@ public static class SeedData
         ForgeUser javaCoach,
         ForgeUser lea,
         ForgeUser sander,
-        ForgeUser thomas)
+        ForgeUser thomas,
+        ForgeUser? ana,
+        ForgeUser? javier,
+        ForgeUser? kim)
     {
-        if (await db.Consultants.AnyAsync()) return;
-
         var dotnetProfile = await db.CompetenceCentreProfiles.FirstOrDefaultAsync(p => p.Name == ".NET");
         var javaProfile = await db.CompetenceCentreProfiles.FirstOrDefaultAsync(p => p.Name == "Java");
 
-        // Consultant records
-        var leaConsultant = new ConsultantEntity { UserId = lea.Id, ProfileId = dotnetProfile?.Id };
-        var sanderConsultant = new ConsultantEntity { UserId = sander.Id, ProfileId = javaProfile?.Id };
-        var thomasConsultant = new ConsultantEntity { UserId = thomas.Id, ProfileId = dotnetProfile?.Id };
-        db.Consultants.AddRange(leaConsultant, sanderConsultant, thomasConsultant);
+        // Upsert consultant records — create if absent, fix TeamId if 0
+        var leaConsultant = await UpsertConsultant(db, lea.Id, teamId: 2, profileId: dotnetProfile?.Id);
+        var sanderConsultant = await UpsertConsultant(db, sander.Id, teamId: 1, profileId: javaProfile?.Id);
+        var thomasConsultant = await UpsertConsultant(db, thomas.Id, teamId: 2, profileId: dotnetProfile?.Id);
+        if (ana is not null) await UpsertConsultant(db, ana.Id, teamId: 2, profileId: dotnetProfile?.Id);
+        if (javier is not null) await UpsertConsultant(db, javier.Id, teamId: 1, profileId: javaProfile?.Id);
+        if (kim is not null) await UpsertConsultant(db, kim.Id, teamId: 4, profileId: null);
         await db.SaveChangesAsync();
+
+        // Skip goals/sessions seeding if already present
+        if (await db.Goals.AnyAsync()) return;
 
         // Skills needed for goals (looked up by name)
         var cleanCode = await db.Skills.FirstAsync(s => s.Name == "Clean Code");
