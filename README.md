@@ -73,6 +73,44 @@ Before Day 2, agree as a team on:
 
 Epics 2–5 can run in parallel from Day 2. E3/E4 frontend work can start immediately using stub/mock data while waiting for backend APIs.
 
+### Work split per developer
+
+```
+PHASE 1 — BASELINE  (Day 1, sequential, Dev 1 leads — all devs review #1)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Dev 1 │ #1 Schema ──► #2 Auth + #32 Team scoping ──► #6 Seed data
+        │ (all 5 devs review and sign off on #1 before merge)
+
+PHASE 2 — PARALLEL  (Day 2+, all devs work independently)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  Dev 1 │ #3 Admin API ──► #5 Admin UI ──► #4 Auth routing              │ 13 SP
+  ──────┤                                                                 │
+  Dev 2 │ #7 Skill entities ──► #8 Profiles ──► #9 Skill API            │
+        │     ──► #10 Seniority ruleset ──► #11 Import ──► #12 FE       │ 27 SP
+  ──────┤                                                                 │
+  Dev 3 │ [stub FE] ──► #13 Roadmap API ──► #14 Dep. warnings           │
+        │           ──► #15 Seniority calc ──► #16 FE roadmap ──► #17   │ 24 SP
+  ──────┤                                                                 │
+  Dev 4 │ [stub FE] ──► #18 Goal API ──► #19 Resource API               │
+        │           ──► #20 Readiness API ──► #30 Resource-goal link     │
+        │           ──► #21 Goals UI ──► #22 Resources UI ──► #23 Flag  │ 28 SP
+  ──────┤                                                                 │
+  Dev 5 │ [stub FE] ──► #25 Validation API ──► #26 Session API          │
+        │           ──► #24 Dashboard API ──► #31 Overdue goals         │
+        │           ──► #27 Dashboard UI ──► #28 Profile UI ──► #29 Live│ 33 SP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+**Cross-epic dependencies to watch:**
+
+| Blocked issue | Needs to land first |
+|---------------|---------------------|
+| Dev 3: #13 Roadmap API | Dev 2: #7 Skill entities + #8 Profiles |
+| Dev 5: #24 Dashboard API | Dev 3: validations schema, Dev 4: goals + flags schema |
+| Dev 3+4+5: frontend impl | Their own backend API (stub with MSW mocks in the meantime) |
+
+**[stub FE]** = start with hardcoded/mock data on Day 2, swap for real API calls once backend is ready.
+
 
 Backlog
 -------
