@@ -143,6 +143,33 @@
       "unmetTitle": "Requirements to advance"
     }
   },
+  "users": {
+    "title": "User Management",
+    "subtitle": "Create, manage and archive users",
+    "allUsers": "All Users",
+    "unassigned": "Unassigned Consultants",
+    "searchPlaceholder": "Search by name or email...",
+    "allRoles": "All roles",
+    "showArchived": "Show archived",
+    "createUser": "Create User",
+    "name": "Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "role": "Role",
+    "teams": "Teams",
+    "status": "Status",
+    "archived": "Archived",
+    "archive": "Archive",
+    "restore": "Restore",
+    "noUsers": "No users found",
+    "createError": "Failed to create user. Check the role and try again.",
+    "roles": {
+      "learner": "Learner",
+      "manager": "Manager",
+      "backoffice": "Backoffice"
+    }
+  },
   "errors": {
     "sessionExpired": "Session expired!",
     "internalServerError": "Internal Server Error!"

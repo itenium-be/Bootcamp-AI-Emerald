@@ -27,6 +27,13 @@ skillforge.db-*
 .env.local
 .env.e2e
 
+# Auto-generated
+frontend/src/routeTree.gen.ts
+
+# AI tooling
+.claude/
+.cursor/
+
 # Test artifacts
 e2e/.test-state.json
 test-results/

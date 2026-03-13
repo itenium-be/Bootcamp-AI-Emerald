@@ -1,6 +1,10 @@
 using System.Security.Claims;
 using Itenium.Forge.Security.OpenIddict;
 using Itenium.SkillForge.Entities;
+using Itenium.SkillForge.Entities.Coaching;
+using Itenium.SkillForge.Entities.Consultants;
+using Itenium.SkillForge.Entities.Goals;
+using Itenium.SkillForge.Entities.Resources;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +23,7 @@ public static class SeedData
         await SeedCourses(db);
         await SkillCatalogueSeedData.Seed(db);
         await app.SeedTestUsers();
+        await app.SeedDemoUsers();
     }
 
     private static async Task SeedTeams(AppDbContext db)
@@ -145,5 +150,210 @@ public static class SeedData
                 await userManager.AddToRoleAsync(user, "learner");
             }
         }
+    }
+
+    // ────────────────────────────────────────────────────────────────────────
+    // Demo users — covers the full bootcamp demo script (issue #6)
+    // ────────────────────────────────────────────────────────────────────────
+
+    private static async Task SeedDemoUsers(this WebApplication app)
+    {
+        using var scope = app.Services.CreateScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ForgeUser>>();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        // Coaches (manager role)
+        var nathalie = await CreateUserIfAbsent(userManager, "nathalie@test.local", "nathalie", "Nathalie", "Dubois", "manager", teamId: 2);
+        var javaCoach = await CreateUserIfAbsent(userManager, "javacoach@test.local", "javacoach", "Marc", "Janssen", "manager", teamId: 1);
+
+        // Consultants (learner role)
+        var lea = await CreateUserIfAbsent(userManager, "lea@test.local", "lea", "Lea", "Martens", "learner", teamId: 2);
+        var sander = await CreateUserIfAbsent(userManager, "sander@test.local", "sander", "Sander", "Claes", "learner", teamId: 1);
+        var thomas = await CreateUserIfAbsent(userManager, "thomas@test.local", "thomas", "Thomas", "Vander", "learner", teamId: 2);
+        var ana = await CreateUserIfAbsent(userManager, "ana@test.local", "ana", "Ana", "Peeters", "learner", teamId: 2);
+        var javier = await CreateUserIfAbsent(userManager, "javier@test.local", "javier", "Javier", "Garcia", "learner", teamId: 1);
+        var kim = await CreateUserIfAbsent(userManager, "kim@test.local", "kim", "Kim", "Wouters", "learner", teamId: 4);
+
+        if (nathalie is null || javaCoach is null || lea is null || sander is null || thomas is null)
+            return;
+
+        await SeedDemoData(db, nathalie, javaCoach, lea, sander, thomas);
+    }
+
+    private static async Task<ForgeUser?> CreateUserIfAbsent(
+        UserManager<ForgeUser> userManager,
+        string email,
+        string userName,
+        string firstName,
+        string lastName,
+        string role,
+        int? teamId = null)
+    {
+        var existing = await userManager.FindByEmailAsync(email);
+        if (existing is not null) return null;
+
+        var user = new ForgeUser
+        {
+            UserName = userName,
+            Email = email,
+            EmailConfirmed = true,
+            FirstName = firstName,
+            LastName = lastName,
+        };
+
+        var result = await userManager.CreateAsync(user, "UserPassword123!");
+        if (!result.Succeeded) return null;
+
+        await userManager.AddToRoleAsync(user, role);
+        if (teamId.HasValue)
+            await userManager.AddClaimAsync(user, new Claim("team", teamId.Value.ToString(System.Globalization.CultureInfo.InvariantCulture)));
+
+        return user;
+    }
+
+    private static async Task SeedDemoData(
+        AppDbContext db,
+        ForgeUser nathalie,
+        ForgeUser javaCoach,
+        ForgeUser lea,
+        ForgeUser sander,
+        ForgeUser thomas)
+    {
+        if (await db.Consultants.AnyAsync()) return;
+
+        var dotnetProfile = await db.CompetenceCentreProfiles.FirstOrDefaultAsync(p => p.Name == ".NET");
+        var javaProfile = await db.CompetenceCentreProfiles.FirstOrDefaultAsync(p => p.Name == "Java");
+
+        // Consultant records
+        var leaConsultant = new ConsultantEntity { UserId = lea.Id, ProfileId = dotnetProfile?.Id };
+        var sanderConsultant = new ConsultantEntity { UserId = sander.Id, ProfileId = javaProfile?.Id };
+        var thomasConsultant = new ConsultantEntity { UserId = thomas.Id, ProfileId = dotnetProfile?.Id };
+        db.Consultants.AddRange(leaConsultant, sanderConsultant, thomasConsultant);
+        await db.SaveChangesAsync();
+
+        // Skills needed for goals (looked up by name)
+        var cleanCode = await db.Skills.FirstAsync(s => s.Name == "Clean Code");
+        var efCore = await db.Skills.FirstAsync(s => s.Name == "Entity Framework Core");
+        var aspNet = await db.Skills.FirstAsync(s => s.Name == "ASP.NET Core");
+        var java = await db.Skills.FirstAsync(s => s.Name == "Java");
+        var springBoot = await db.Skills.FirstAsync(s => s.Name == "Spring Boot");
+        var testingFundamentals = await db.Skills.FirstAsync(s => s.Name == "Testing Fundamentals");
+
+        // Resources for Lea's goals (added by Nathalie as coach)
+        var cleanCodeBook = new ResourceEntity
+        {
+            Title = "Clean Code by Robert C. Martin",
+            Url = "https://www.oreilly.com/library/view/clean-code-a/9780136083238/",
+            Type = ResourceType.Book,
+            Skill = cleanCode,
+            FromNiveau = 2,
+            ToNiveau = 4,
+            AddedByUserId = nathalie.Id,
+        };
+        var efCoreDocs = new ResourceEntity
+        {
+            Title = "EF Core Getting Started",
+            Url = "https://learn.microsoft.com/en-us/ef/core/get-started/overview/first-app",
+            Type = ResourceType.Documentation,
+            Skill = efCore,
+            FromNiveau = 1,
+            ToNiveau = 3,
+            AddedByUserId = nathalie.Id,
+        };
+        var aspNetTutorial = new ResourceEntity
+        {
+            Title = "ASP.NET Core Web API Tutorial",
+            Url = "https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api",
+            Type = ResourceType.Documentation,
+            Skill = aspNet,
+            FromNiveau = 1,
+            ToNiveau = 3,
+            AddedByUserId = nathalie.Id,
+        };
+        db.Resources.AddRange(cleanCodeBook, efCoreDocs, aspNetTutorial);
+        await db.SaveChangesAsync();
+
+        // Lea's 3 goals with linked resources (set by Nathalie)
+        var leaGoalCleanCode = new GoalEntity
+        {
+            ConsultantUserId = lea.Id,
+            CoachUserId = nathalie.Id,
+            Skill = cleanCode,
+            CurrentNiveau = 1,
+            TargetNiveau = 3,
+            Deadline = DateTime.UtcNow.AddMonths(3),
+            GoalResources = [new GoalResourceEntity { Resource = cleanCodeBook }],
+        };
+        var leaGoalEfCore = new GoalEntity
+        {
+            ConsultantUserId = lea.Id,
+            CoachUserId = nathalie.Id,
+            Skill = efCore,
+            CurrentNiveau = 0,
+            TargetNiveau = 2,
+            Deadline = DateTime.UtcNow.AddMonths(2),
+            GoalResources = [new GoalResourceEntity { Resource = efCoreDocs }],
+        };
+        var leaGoalAspNet = new GoalEntity
+        {
+            ConsultantUserId = lea.Id,
+            CoachUserId = nathalie.Id,
+            Skill = aspNet,
+            CurrentNiveau = 0,
+            TargetNiveau = 2,
+            Deadline = DateTime.UtcNow.AddMonths(2),
+            GoalResources = [new GoalResourceEntity { Resource = aspNetTutorial }],
+        };
+        db.Goals.AddRange(leaGoalCleanCode, leaGoalEfCore, leaGoalAspNet);
+        await db.SaveChangesAsync();
+
+        // Readiness flag on Lea's Clean Code goal (so Nathalie's dashboard shows it)
+        db.ReadinessFlags.Add(new ReadinessFlagEntity
+        {
+            GoalId = leaGoalCleanCode.Id,
+            RaisedAt = DateTime.UtcNow.AddDays(-2),
+        });
+
+        // Sander's 3 onboarding goals (set before first login by Java coach)
+        db.Goals.AddRange(
+            new GoalEntity
+            {
+                ConsultantUserId = sander.Id,
+                CoachUserId = javaCoach.Id,
+                Skill = java,
+                CurrentNiveau = 0,
+                TargetNiveau = 2,
+                Deadline = DateTime.UtcNow.AddMonths(1),
+            },
+            new GoalEntity
+            {
+                ConsultantUserId = sander.Id,
+                CoachUserId = javaCoach.Id,
+                Skill = springBoot,
+                CurrentNiveau = 0,
+                TargetNiveau = 1,
+                Deadline = DateTime.UtcNow.AddMonths(2),
+            },
+            new GoalEntity
+            {
+                ConsultantUserId = sander.Id,
+                CoachUserId = javaCoach.Id,
+                Skill = testingFundamentals,
+                CurrentNiveau = 0,
+                TargetNiveau = 1,
+                Deadline = DateTime.UtcNow.AddMonths(2),
+            });
+
+        // Thomas: last coaching session closed 23 days ago (triggers inactivity alert)
+        db.CoachingSessions.Add(new CoachingSessionEntity
+        {
+            ConsultantUserId = thomas.Id,
+            CoachUserId = nathalie.Id,
+            StartedAt = DateTime.UtcNow.AddDays(-25),
+            ClosedAt = DateTime.UtcNow.AddDays(-23),
+            Notes = "Initial onboarding session.",
+        });
+
+        await db.SaveChangesAsync();
     }
 }

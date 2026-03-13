@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Itenium.SkillForge.Data;
+using Itenium.SkillForge.Services;
 using Itenium.SkillForge.Services.Profiles;
 using Itenium.SkillForge.Services.Roadmap;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +16,14 @@ namespace Itenium.SkillForge.WebApi.Controllers;
 public class ConsultantsController : ControllerBase
 {
     private readonly IProfileService _profiles;
+    private readonly ITeamQueryScope _scope;
     private readonly IRoadmapService _roadmap;
     private readonly AppDbContext _db;
 
-    public ConsultantsController(IProfileService profiles, IRoadmapService roadmap, AppDbContext db)
+    public ConsultantsController(IProfileService profiles, ITeamQueryScope scope, IRoadmapService roadmap, AppDbContext db)
     {
         _profiles = profiles;
+        _scope = scope;
         _roadmap = roadmap;
         _db = db;
     }
@@ -30,6 +33,7 @@ public class ConsultantsController : ControllerBase
     /// <summary>
     /// Assigns (or clears) the competence centre profile for a consultant.
     /// Pass <c>null</c> as <see cref="AssignProfileRequest.ProfileId"/> to remove the current profile.
+    /// Only consultants within the caller's team scope are accessible.
     /// </summary>
     [HttpPut("{id:int}/profile")]
     [Authorize(Policy = SkillForgePolicies.ManagerOrBackoffice)]
@@ -40,7 +44,7 @@ public class ConsultantsController : ControllerBase
         [FromBody] AssignProfileRequest request,
         CancellationToken ct = default)
     {
-        var success = await _profiles.AssignProfileToConsultantAsync(id, request.ProfileId, ct);
+        var success = await _profiles.AssignProfileToConsultantAsync(id, request.ProfileId, _scope, ct);
         if (!success) return NotFound();
         return NoContent();
     }
