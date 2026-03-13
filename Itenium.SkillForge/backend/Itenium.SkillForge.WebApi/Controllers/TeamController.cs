@@ -13,12 +13,12 @@ namespace Itenium.SkillForge.WebApi.Controllers;
 public class TeamController : ControllerBase
 {
     private readonly AppDbContext _db;
-    private readonly ISkillForgeUser _user;
+    private readonly ITeamQueryScope _teamScope;
 
-    public TeamController(AppDbContext db, ISkillForgeUser user)
+    public TeamController(AppDbContext db, ITeamQueryScope teamScope)
     {
         _db = db;
-        _user = user;
+        _teamScope = teamScope;
     }
 
     /// <summary>
@@ -27,13 +27,13 @@ public class TeamController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<TeamEntity>>> GetUserTeams()
     {
-        if (_user.IsBackOffice)
+        if (_teamScope.IsBackOffice)
         {
             return await _db.Teams.ToListAsync();
         }
 
         return await _db.Teams
-            .Where(t => _user.Teams.Contains(t.Id))
+            .Where(t => _teamScope.TeamIds.Contains(t.Id))
             .ToListAsync();
     }
 }
