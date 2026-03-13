@@ -1,3 +1,4 @@
+using Itenium.SkillForge.Services;
 using Itenium.SkillForge.Services.Profiles;
 using Itenium.SkillForge.Services.SkillCatalogue;
 using Microsoft.EntityFrameworkCore;
@@ -76,9 +77,13 @@ internal sealed class ProfileService : IProfileService
     public async Task<bool> AssignProfileToConsultantAsync(
         int consultantId,
         int? profileId,
+        ITeamQueryScope scope,
         CancellationToken ct = default)
     {
-        var consultant = await _db.Consultants.FindAsync([consultantId], ct);
+        var consultant = await _db.Consultants
+            .ApplyTeamScope(scope)
+            .FirstOrDefaultAsync(c => c.Id == consultantId, ct);
+
         if (consultant is null) return false;
 
         consultant.ProfileId = profileId;
