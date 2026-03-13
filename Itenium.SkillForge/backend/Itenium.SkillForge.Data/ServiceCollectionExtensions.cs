@@ -24,6 +24,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IGoalService, GoalService>();
         services.AddScoped<IResourceService, ResourceService>();
         services.AddScoped<IReadinessFlagService, ReadinessFlagService>();
+        services.AddScoped<ISkillValidationService, SkillValidationService>();
+        services.AddScoped<ICoachingSessionService, CoachingSessionService>();
+        services.AddScoped<ICoachDashboardService, CoachDashboardService>();
         return services;
     }
 }

@@ -232,6 +232,16 @@
       "backoffice": "Backoffice"
     }
   },
+  "members": {
+    "title": "Teamleden",
+    "subtitle": "Bekijk en beheer de consultants van uw team",
+    "searchPlaceholder": "Zoek op naam of e-mail...",
+    "name": "Naam",
+    "email": "E-mail",
+    "profile": "Profiel",
+    "noProfile": "Geen profiel",
+    "noMembers": "Geen teamleden gevonden"
+  },
   "errors": {
     "sessionExpired": "Sessie verlopen!",
     "internalServerError": "Interne serverfout!"
