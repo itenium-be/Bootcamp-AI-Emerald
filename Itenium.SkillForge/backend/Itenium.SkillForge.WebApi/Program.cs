@@ -23,6 +23,7 @@ try
     builder.AddForgeOpenIddict<AppDbContext>(options => options.UseNpgsql(connectionString));
 
     builder.Services.AddScoped<ISkillForgeUser, SkillForgeUser>();
+    builder.Services.AddSkillForgeInfrastructure();
 
     builder.AddForgeControllers();
     builder.AddForgeSwagger();
