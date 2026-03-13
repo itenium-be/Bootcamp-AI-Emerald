@@ -27,6 +27,9 @@ skillforge.db-*
 .env.local
 .env.e2e
 
+# NuGet credentials (contains GitHub PAT)
+nuget.config
+
 # Test artifacts
 e2e/.test-state.json
 test-results/
