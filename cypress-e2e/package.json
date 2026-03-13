@@ -9,6 +9,7 @@
     "test:ci": "cypress run --browser chromium"
   },
   "devDependencies": {
-    "cypress": "^14.0.0"
+    "cypress": "^14.0.0",
+    "typescript": "^5.0.0"
   }
 }
