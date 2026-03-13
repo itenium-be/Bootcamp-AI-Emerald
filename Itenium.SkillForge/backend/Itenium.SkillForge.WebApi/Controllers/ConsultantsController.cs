@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using Itenium.SkillForge.Data;
 using Itenium.SkillForge.Services;
+using Itenium.SkillForge.Services.Coaching;
+using Itenium.SkillForge.Services.Goals;
 using Itenium.SkillForge.Services.Profiles;
 using Itenium.SkillForge.Services.Roadmap;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +20,23 @@ public class ConsultantsController : ControllerBase
     private readonly IProfileService _profiles;
     private readonly ITeamQueryScope _scope;
     private readonly IRoadmapService _roadmap;
+    private readonly IGoalService _goals;
+    private readonly IReadinessFlagService _flags;
     private readonly AppDbContext _db;
 
-    public ConsultantsController(IProfileService profiles, ITeamQueryScope scope, IRoadmapService roadmap, AppDbContext db)
+    public ConsultantsController(
+        IProfileService profiles,
+        ITeamQueryScope scope,
+        IRoadmapService roadmap,
+        IGoalService goals,
+        IReadinessFlagService flags,
+        AppDbContext db)
     {
         _profiles = profiles;
         _scope = scope;
         _roadmap = roadmap;
+        _goals = goals;
+        _flags = flags;
         _db = db;
     }
 
@@ -101,6 +113,58 @@ public class ConsultantsController : ControllerBase
     {
         var result = await _roadmap.GetSeniorityProgressAsync(id, ct);
         if (result is null) return NotFound();
+        return Ok(result);
+    }
+
+    // ── Goals (#18) ───────────────────────────────────────────────────────────
+
+    /// <summary>Returns the current user's goals.</summary>
+    [HttpGet("me/goals")]
+    [ProducesResponseType(typeof(IReadOnlyList<GoalDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetMyGoals(CancellationToken ct = default)
+    {
+        var consultantId = await ResolveConsultantIdAsync(GetCurrentUserId(), ct);
+        if (consultantId is null) return NotFound();
+        var result = await _goals.GetGoalsForConsultantAsync(consultantId.Value, ct);
+        return Ok(result);
+    }
+
+    /// <summary>Returns all goals for a specific consultant (coach/backoffice view).</summary>
+    [HttpGet("{id:int}/goals")]
+    [Authorize(Policy = SkillForgePolicies.ManagerOrBackoffice)]
+    [ProducesResponseType(typeof(IReadOnlyList<GoalDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetGoals(int id, CancellationToken ct = default)
+    {
+        var result = await _goals.GetGoalsForConsultantAsync(id, ct);
+        return Ok(result);
+    }
+
+    /// <summary>Creates a coaching goal for a consultant (coach/backoffice only).</summary>
+    [HttpPost("{id:int}/goals")]
+    [Authorize(Policy = SkillForgePolicies.ManagerOrBackoffice)]
+    [ProducesResponseType(typeof(GoalDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> CreateGoal(
+        int id,
+        [FromBody] CreateGoalRequest request,
+        CancellationToken ct = default)
+    {
+        var coachUserId = GetCurrentUserId();
+        var result = await _goals.CreateGoalAsync(id, request, coachUserId, ct);
+        if (result is null) return NotFound();
+        return CreatedAtAction(nameof(GetGoals), new { id }, result);
+    }
+
+    // ── Readiness flags (#20) ─────────────────────────────────────────────────
+
+    /// <summary>Returns all active readiness flags for a consultant's goals (coach dashboard).</summary>
+    [HttpGet("{id:int}/readiness-flags")]
+    [Authorize(Policy = SkillForgePolicies.ManagerOrBackoffice)]
+    [ProducesResponseType(typeof(IReadOnlyList<ConsultantReadinessFlagDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetReadinessFlags(int id, CancellationToken ct = default)
+    {
+        var result = await _flags.GetActiveFlagsForConsultantAsync(id, ct);
         return Ok(result);
     }
 

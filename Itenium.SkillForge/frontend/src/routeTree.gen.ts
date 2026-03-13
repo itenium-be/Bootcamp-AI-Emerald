@@ -14,11 +14,13 @@ import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/
 import { Route as AuthenticatedSkillsRouteImport } from './routes/_authenticated/skills'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedRoadmapRouteImport } from './routes/_authenticated/roadmap'
+import { Route as AuthenticatedResourcesRouteImport } from './routes/_authenticated/resources'
+import { Route as AuthenticatedGoalsRouteImport } from './routes/_authenticated/goals'
 import { Route as AuthenticatedCoursesRouteImport } from './routes/_authenticated/courses'
 import { Route as authSignInRouteImport } from './routes/(auth)/sign-in'
 import { Route as AuthenticatedAdminRouteRouteImport } from './routes/_authenticated/_admin/route'
-import { Route as AuthenticatedSkillsSkillIdRouteImport } from './routes/_authenticated/skills.$skillId'
 import { Route as AuthenticatedSkillsIndexRouteImport } from './routes/_authenticated/skills.index'
+import { Route as AuthenticatedSkillsSkillIdRouteImport } from './routes/_authenticated/skills.$skillId'
 import { Route as AuthenticatedAdminUsersRouteImport } from './routes/_authenticated/_admin/users'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -45,6 +47,16 @@ const AuthenticatedRoadmapRoute = AuthenticatedRoadmapRouteImport.update({
   path: '/roadmap',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedResourcesRoute = AuthenticatedResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedGoalsRoute = AuthenticatedGoalsRouteImport.update({
+  id: '/goals',
+  path: '/goals',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedCoursesRoute = AuthenticatedCoursesRouteImport.update({
   id: '/courses',
   path: '/courses',
@@ -59,16 +71,16 @@ const AuthenticatedAdminRouteRoute = AuthenticatedAdminRouteRouteImport.update({
   id: '/_admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedSkillsSkillIdRoute =
-  AuthenticatedSkillsSkillIdRouteImport.update({
-    id: '/$skillId',
-    path: '/$skillId',
-    getParentRoute: () => AuthenticatedSkillsRoute,
-  } as any)
 const AuthenticatedSkillsIndexRoute =
   AuthenticatedSkillsIndexRouteImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => AuthenticatedSkillsRoute,
+  } as any)
+const AuthenticatedSkillsSkillIdRoute =
+  AuthenticatedSkillsSkillIdRouteImport.update({
+    id: '/$skillId',
+    path: '/$skillId',
     getParentRoute: () => AuthenticatedSkillsRoute,
   } as any)
 const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
@@ -80,6 +92,8 @@ const AuthenticatedAdminUsersRoute = AuthenticatedAdminUsersRouteImport.update({
 export interface FileRoutesByFullPath {
   '/sign-in': typeof authSignInRoute
   '/courses': typeof AuthenticatedCoursesRoute
+  '/goals': typeof AuthenticatedGoalsRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/skills': typeof AuthenticatedSkillsRouteWithChildren
@@ -91,6 +105,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/sign-in': typeof authSignInRoute
   '/courses': typeof AuthenticatedCoursesRoute
+  '/goals': typeof AuthenticatedGoalsRoute
+  '/resources': typeof AuthenticatedResourcesRoute
   '/roadmap': typeof AuthenticatedRoadmapRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/': typeof AuthenticatedIndexRoute
@@ -104,6 +120,8 @@ export interface FileRoutesById {
   '/_authenticated/_admin': typeof AuthenticatedAdminRouteRouteWithChildren
   '/(auth)/sign-in': typeof authSignInRoute
   '/_authenticated/courses': typeof AuthenticatedCoursesRoute
+  '/_authenticated/goals': typeof AuthenticatedGoalsRoute
+  '/_authenticated/resources': typeof AuthenticatedResourcesRoute
   '/_authenticated/roadmap': typeof AuthenticatedRoadmapRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/skills': typeof AuthenticatedSkillsRouteWithChildren
@@ -117,6 +135,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/sign-in'
     | '/courses'
+    | '/goals'
+    | '/resources'
     | '/roadmap'
     | '/settings'
     | '/skills'
@@ -128,18 +148,22 @@ export interface FileRouteTypes {
   to:
     | '/sign-in'
     | '/courses'
+    | '/goals'
+    | '/resources'
     | '/roadmap'
     | '/settings'
-    | '/skills'
     | '/'
     | '/users'
     | '/skills/$skillId'
+    | '/skills'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_authenticated/_admin'
     | '/(auth)/sign-in'
     | '/_authenticated/courses'
+    | '/_authenticated/goals'
+    | '/_authenticated/resources'
     | '/_authenticated/roadmap'
     | '/_authenticated/settings'
     | '/_authenticated/skills'
@@ -191,6 +215,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRoadmapRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/resources': {
+      id: '/_authenticated/resources'
+      path: '/resources'
+      fullPath: '/resources'
+      preLoaderRoute: typeof AuthenticatedResourcesRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/goals': {
+      id: '/_authenticated/goals'
+      path: '/goals'
+      fullPath: '/goals'
+      preLoaderRoute: typeof AuthenticatedGoalsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/courses': {
       id: '/_authenticated/courses'
       path: '/courses'
@@ -212,6 +250,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/skills/': {
+      id: '/_authenticated/skills/'
+      path: '/'
+      fullPath: '/skills/'
+      preLoaderRoute: typeof AuthenticatedSkillsIndexRouteImport
+      parentRoute: typeof AuthenticatedSkillsRoute
+    }
     '/_authenticated/skills/$skillId': {
       id: '/_authenticated/skills/$skillId'
       path: '/$skillId'
@@ -219,12 +264,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSkillsSkillIdRouteImport
       parentRoute: typeof AuthenticatedSkillsRoute
     }
-    '/_authenticated/skills/': {
-      id: '/_authenticated/skills/'
-      path: '/'
-      fullPath: '/skills/'
-      preLoaderRoute: typeof AuthenticatedSkillsIndexRouteImport
-      parentRoute: typeof AuthenticatedSkillsRoute
     '/_authenticated/_admin/users': {
       id: '/_authenticated/_admin/users'
       path: '/users'
@@ -265,6 +304,8 @@ const AuthenticatedSkillsRouteWithChildren =
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminRouteRoute: typeof AuthenticatedAdminRouteRouteWithChildren
   AuthenticatedCoursesRoute: typeof AuthenticatedCoursesRoute
+  AuthenticatedGoalsRoute: typeof AuthenticatedGoalsRoute
+  AuthenticatedResourcesRoute: typeof AuthenticatedResourcesRoute
   AuthenticatedRoadmapRoute: typeof AuthenticatedRoadmapRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedSkillsRoute: typeof AuthenticatedSkillsRouteWithChildren
@@ -274,6 +315,8 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminRouteRoute: AuthenticatedAdminRouteRouteWithChildren,
   AuthenticatedCoursesRoute: AuthenticatedCoursesRoute,
+  AuthenticatedGoalsRoute: AuthenticatedGoalsRoute,
+  AuthenticatedResourcesRoute: AuthenticatedResourcesRoute,
   AuthenticatedRoadmapRoute: AuthenticatedRoadmapRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedSkillsRoute: AuthenticatedSkillsRouteWithChildren,

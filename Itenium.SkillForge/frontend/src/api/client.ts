@@ -169,6 +169,142 @@ export async function fetchSeniorityProgress(): Promise<SeniorityProgressResult 
   }
 }
 
+// ── Goals (#18, #30) ──────────────────────────────────────────────────────────
+
+export type ResourceType = 'Article' | 'Video' | 'Book' | 'Course' | 'Documentation' | 'Other';
+
+export interface ReadinessFlagDto {
+  id: number;
+  raisedAt: string;
+  ageDays: number;
+}
+
+export interface LinkedResourceDto {
+  resourceId: number;
+  title: string;
+  url: string;
+  type: ResourceType;
+  isCompleted: boolean;
+}
+
+export type GoalStatus = 'Active' | 'Achieved' | 'Cancelled';
+
+export interface GoalDto {
+  id: number;
+  consultantUserId: string;
+  coachUserId: string;
+  skillId: number;
+  skillName: string;
+  currentNiveau: number;
+  targetNiveau: number;
+  deadline: string | null;
+  status: GoalStatus;
+  createdAt: string;
+  resources: LinkedResourceDto[];
+  activeReadinessFlag: ReadinessFlagDto | null;
+}
+
+export interface CreateGoalRequest {
+  skillId: number;
+  currentNiveau: number;
+  targetNiveau: number;
+  deadline?: string | null;
+  resourceIds?: number[];
+}
+
+export interface UpdateGoalRequest {
+  currentNiveau: number;
+  targetNiveau: number;
+  deadline?: string | null;
+  status: GoalStatus;
+}
+
+export async function fetchMyGoals(): Promise<GoalDto[]> {
+  const response = await api.get<GoalDto[]>('/api/consultants/me/goals');
+  return response.data;
+}
+
+export async function fetchGoalsForConsultant(consultantId: number): Promise<GoalDto[]> {
+  const response = await api.get<GoalDto[]>(`/api/consultants/${consultantId}/goals`);
+  return response.data;
+}
+
+export async function createGoal(consultantId: number, request: CreateGoalRequest): Promise<GoalDto> {
+  const response = await api.post<GoalDto>(`/api/consultants/${consultantId}/goals`, request);
+  return response.data;
+}
+
+export async function updateGoal(goalId: number, request: UpdateGoalRequest): Promise<GoalDto> {
+  const response = await api.put<GoalDto>(`/api/goals/${goalId}`, request);
+  return response.data;
+}
+
+export async function addResourceToGoal(goalId: number, resourceId: number): Promise<void> {
+  await api.post(`/api/goals/${goalId}/resources`, { resourceId });
+}
+
+export async function removeResourceFromGoal(goalId: number, resourceId: number): Promise<void> {
+  await api.delete(`/api/goals/${goalId}/resources/${resourceId}`);
+}
+
+export async function raiseReadinessFlag(goalId: number): Promise<void> {
+  await api.post(`/api/goals/${goalId}/readiness-flag`);
+}
+
+export async function dismissReadinessFlag(goalId: number): Promise<void> {
+  await api.delete(`/api/goals/${goalId}/readiness-flag`);
+}
+
+// ── Resources (#19) ───────────────────────────────────────────────────────────
+
+export interface ResourceDto {
+  id: number;
+  title: string;
+  url: string;
+  type: ResourceType;
+  skillId: number;
+  skillName: string;
+  fromNiveau: number;
+  toNiveau: number;
+  addedByUserId: string;
+  addedAt: string;
+  completionCount: number;
+  positiveRatings: number;
+  negativeRatings: number;
+}
+
+export interface CreateResourceRequest {
+  title: string;
+  url: string;
+  type: ResourceType;
+  skillId: number;
+  fromNiveau: number;
+  toNiveau: number;
+}
+
+export async function fetchResources(params?: {
+  skillId?: number;
+  type?: ResourceType;
+  fromNiveau?: number;
+  toNiveau?: number;
+}): Promise<ResourceDto[]> {
+  const response = await api.get<ResourceDto[]>('/api/resources', { params });
+  return response.data;
+}
+
+export async function createResource(request: CreateResourceRequest): Promise<ResourceDto> {
+  const response = await api.post<ResourceDto>('/api/resources', request);
+  return response.data;
+}
+
+export async function completeResource(resourceId: number): Promise<void> {
+  await api.post(`/api/resources/${resourceId}/complete`);
+}
+
+export async function rateResource(resourceId: number, isPositive: boolean): Promise<void> {
+  await api.post(`/api/resources/${resourceId}/rate`, { isPositive });
+}
+
 export interface UserResponse {
   id: string;
   email: string;
