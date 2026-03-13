@@ -223,6 +223,12 @@ export function Layout() {
   // Determine if user is learner only (no team management access)
   const isLearnerOnly = !isBackOffice && (!teams || teams.length === 0);
 
+  const roleBadgeLabel =
+    isBackOffice && mode === 'backoffice'
+      ? t('app.backoffice')
+      : mode === 'manager'
+        ? t('app.coach')
+        : t('app.learner');
   // Dashboard - always shown
   const dashboardItem = { path: '/', icon: LayoutDashboard, label: t('nav.dashboard') };
 
@@ -452,6 +458,14 @@ export function Layout() {
           </div>
 
           <div className="flex items-center gap-2">
+            {/* Role Badge */}
+            <span
+              data-testid="role-badge"
+              className="px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground border"
+            >
+              {roleBadgeLabel}
+            </span>
+
             {/* Language Switcher */}
             <div className="flex items-center gap-1">
               {languages.map((lang) => (
