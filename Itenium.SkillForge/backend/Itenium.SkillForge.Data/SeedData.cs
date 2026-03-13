@@ -17,6 +17,7 @@ public static class SeedData
 
         await SeedTeams(db);
         await SeedCourses(db);
+        await SkillCatalogueSeedData.Seed(db);
         await app.SeedTestUsers();
     }
 

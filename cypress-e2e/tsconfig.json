@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "lib": ["ES2021", "dom"],
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "types": ["cypress"]
+  },
+  "include": ["**/*.ts"]
+}

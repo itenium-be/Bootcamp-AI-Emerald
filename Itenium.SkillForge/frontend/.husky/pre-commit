@@ -1,3 +1,10 @@
+# Block commits containing GitHub PATs or hardcoded NuGet passwords
+SECRETS_PATTERN='ghp_[A-Za-z0-9]{36}|ghs_[A-Za-z0-9]{36}|ghr_[A-Za-z0-9]{36}'
+if git diff --cached -U0 -- '*.cs' '*.json' '*.config' '*.xml' '*.env' '*.ts' '*.tsx' | grep -qE "$SECRETS_PATTERN"; then
+  echo "ERROR: Possible GitHub PAT detected in staged changes. Remove credentials before committing."
+  exit 1
+fi
+
 cd Itenium.SkillForge/frontend && bunx lint-staged && bun run knip
 
 # Backend: check formatting on staged .cs files

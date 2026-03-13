@@ -8,6 +8,7 @@
   "nav": {
     "navigation": "Navigation",
     "dashboard": "Dashboard",
+    "skills": "Skill Catalogue",
     "courses": "Courses",
     "learners": "Learners",
     "settings": "Settings",
@@ -104,6 +105,24 @@
     "noResults": "No results found",
     "active": "Active",
     "user": "User"
+  },
+  "skills": {
+    "title": "Skill Catalogue",
+    "subtitle": "Browse and explore all skills across profiles",
+    "searchPlaceholder": "Search skills...",
+    "allCategories": "All",
+    "noSkills": "No skills found",
+    "noSkillsHint": "Try adjusting your search or category filter",
+    "levels": "levels",
+    "checkboxSkill": "Checkbox skill",
+    "checkboxSkillHint": "Mark as complete — no progression levels",
+    "levelN": "Level {{niveau}}",
+    "prerequisites": "Prerequisites",
+    "prerequisiteHint": "Recommended before starting this skill",
+    "prerequisiteMinLevel": "min. level {{niveau}}",
+    "backToSkills": "Back to Skills",
+    "notFound": "Skill not found",
+    "notFoundHint": "This skill does not exist or has been removed"
   },
   "errors": {
     "sessionExpired": "Session expired!",

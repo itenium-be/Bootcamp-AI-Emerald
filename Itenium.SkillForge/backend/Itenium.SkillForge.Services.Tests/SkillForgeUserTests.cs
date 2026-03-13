@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Itenium.SkillForge.Services;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 
@@ -19,7 +20,7 @@ public class SkillForgeUserTests
     [Test]
     public void IsBackOffice_WhenUserHasBackofficeRole_ReturnsTrue()
     {
-        var claims = new List<Claim> { new(ClaimTypes.Role, "backoffice") };
+        var claims = new List<Claim> { new(ClaimTypes.Role, SkillForgeRoles.Backoffice) };
         SetupUser(claims);
         var sut = new SkillForgeUser(_httpContextAccessor);
 
@@ -31,7 +32,7 @@ public class SkillForgeUserTests
     [Test]
     public void IsBackOffice_WhenUserDoesNotHaveBackofficeRole_ReturnsFalse()
     {
-        var claims = new List<Claim> { new(ClaimTypes.Role, "learner") };
+        var claims = new List<Claim> { new(ClaimTypes.Role, SkillForgeRoles.Learner) };
         SetupUser(claims);
         var sut = new SkillForgeUser(_httpContextAccessor);
 
@@ -71,7 +72,7 @@ public class SkillForgeUserTests
     [Test]
     public void Teams_WhenUserHasNoTeamClaims_ReturnsEmpty()
     {
-        var claims = new List<Claim> { new(ClaimTypes.Role, "learner") };
+        var claims = new List<Claim> { new(ClaimTypes.Role, SkillForgeRoles.Learner) };
         SetupUser(claims);
         var sut = new SkillForgeUser(_httpContextAccessor);
 

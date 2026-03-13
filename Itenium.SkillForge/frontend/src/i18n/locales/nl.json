@@ -8,6 +8,7 @@
   "nav": {
     "navigation": "Navigatie",
     "dashboard": "Dashboard",
+    "skills": "Vaardighedencatalogus",
     "courses": "Cursussen",
     "learners": "Leerlingen",
     "settings": "Instellingen",
@@ -104,6 +105,24 @@
     "noResults": "Geen resultaten gevonden",
     "active": "Actief",
     "user": "Gebruiker"
+  },
+  "skills": {
+    "title": "Vaardighedencatalogus",
+    "subtitle": "Bekijk en verken alle vaardigheden per profiel",
+    "searchPlaceholder": "Vaardigheden zoeken...",
+    "allCategories": "Alles",
+    "noSkills": "Geen vaardigheden gevonden",
+    "noSkillsHint": "Pas uw zoekopdracht of categoriefilter aan",
+    "levels": "niveaus",
+    "checkboxSkill": "Afvinkbare vaardigheid",
+    "checkboxSkillHint": "Markeer als voltooid — geen progressieniveaus",
+    "levelN": "Niveau {{niveau}}",
+    "prerequisites": "Vereiste vaardigheden",
+    "prerequisiteHint": "Aanbevolen voor u begint met deze vaardigheid",
+    "prerequisiteMinLevel": "min. niveau {{niveau}}",
+    "backToSkills": "Terug naar vaardigheden",
+    "notFound": "Vaardigheid niet gevonden",
+    "notFoundHint": "Deze vaardigheid bestaat niet of is verwijderd"
   },
   "errors": {
     "sessionExpired": "Sessie verlopen!",

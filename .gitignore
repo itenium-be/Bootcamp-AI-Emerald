@@ -5,3 +5,12 @@ _bmad
 .~lock.Bootcamp-AI.pptx#
 dashboard
 .env
+
+# Cypress E2E
+cypress-e2e/node_modules/
+cypress-e2e/cypress/videos/
+cypress-e2e/cypress/screenshots/
+
+# Playwright MCP
+playwright-mcp/node_modules/
+.playwright-mcp/
