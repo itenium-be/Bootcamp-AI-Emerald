@@ -1,0 +1,11 @@
+{
+  "name": "skillforge-playwright-mcp",
+  "version": "1.0.0",
+  "description": "Playwright MCP server for SkillForge browser automation",
+  "scripts": {
+    "start": "playwright-mcp"
+  },
+  "dependencies": {
+    "@playwright/mcp": "latest"
+  }
+}
