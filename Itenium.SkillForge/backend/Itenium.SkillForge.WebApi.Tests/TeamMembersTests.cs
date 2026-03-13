@@ -30,7 +30,7 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), Db);
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db);
 
         var result = await controller.GetTeamMembers();
 
@@ -49,7 +49,7 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(isBackOffice: true);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), Db);
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db);
 
         var result = await controller.GetTeamMembers();
 
@@ -68,7 +68,7 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), Db);
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db);
 
         var result = await controller.GetTeamMembers();
 
@@ -88,7 +88,7 @@ public class TeamMembersTests : DatabaseTestBase
         await Db.SaveChangesAsync();
 
         var scope = new FakeTeamQueryScope(teamIds: [TeamA]);
-        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), Db);
+        var controller = new ConsultantsController(new ProfileService(Db), scope, new RoadmapService(Db), new GoalService(Db), new ReadinessFlagService(Db), Db);
 
         var result = await controller.GetTeamMembers();
 
